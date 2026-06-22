@@ -35,7 +35,7 @@ func (q *Queries) CreateFolder(ctx context.Context, arg CreateFolderParams) (Fol
 	return i, err
 }
 
-const deleteFolder = `-- name: DeleteFolder :exec
+const deleteFolder = `-- name: DeleteFolder :execrows
 DELETE FROM folders
 WHERE id = $1 AND owner_id = $2
 `
@@ -45,9 +45,12 @@ type DeleteFolderParams struct {
 	OwnerID uuid.UUID
 }
 
-func (q *Queries) DeleteFolder(ctx context.Context, arg DeleteFolderParams) error {
-	_, err := q.db.Exec(ctx, deleteFolder, arg.ID, arg.OwnerID)
-	return err
+func (q *Queries) DeleteFolder(ctx context.Context, arg DeleteFolderParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteFolder, arg.ID, arg.OwnerID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const getFolder = `-- name: GetFolder :one
@@ -107,20 +110,20 @@ func (q *Queries) ListFolders(ctx context.Context, ownerID uuid.UUID) ([]Folder,
 
 const updateFolder = `-- name: UpdateFolder :one
 UPDATE folders
-SET name = $3,
+SET name = $1,
     updated_at = now()
-WHERE id = $1 AND owner_id = $2
+WHERE id = $2 AND owner_id = $3
 RETURNING id, owner_id, name, created_at, updated_at
 `
 
 type UpdateFolderParams struct {
+	Name    string
 	ID      uuid.UUID
 	OwnerID uuid.UUID
-	Name    string
 }
 
 func (q *Queries) UpdateFolder(ctx context.Context, arg UpdateFolderParams) (Folder, error) {
-	row := q.db.QueryRow(ctx, updateFolder, arg.ID, arg.OwnerID, arg.Name)
+	row := q.db.QueryRow(ctx, updateFolder, arg.Name, arg.ID, arg.OwnerID)
 	var i Folder
 	err := row.Scan(
 		&i.ID,

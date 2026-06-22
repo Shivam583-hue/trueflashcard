@@ -14,25 +14,25 @@ import (
 
 const createDeck = `-- name: CreateDeck :one
 INSERT INTO decks (folder_id, name, description)
-SELECT f.id, $3, $4
+SELECT f.id, $1, $2
 FROM folders f
-WHERE f.id = $1 AND f.owner_id = $2
+WHERE f.id = $3 AND f.owner_id = $4
 RETURNING id, folder_id, name, description, created_at, updated_at
 `
 
 type CreateDeckParams struct {
-	ID          uuid.UUID
-	OwnerID     uuid.UUID
 	Name        string
 	Description string
+	FolderID    uuid.UUID
+	OwnerID     uuid.UUID
 }
 
 func (q *Queries) CreateDeck(ctx context.Context, arg CreateDeckParams) (Deck, error) {
 	row := q.db.QueryRow(ctx, createDeck,
-		arg.ID,
-		arg.OwnerID,
 		arg.Name,
 		arg.Description,
+		arg.FolderID,
+		arg.OwnerID,
 	)
 	var i Deck
 	err := row.Scan(
@@ -46,7 +46,7 @@ func (q *Queries) CreateDeck(ctx context.Context, arg CreateDeckParams) (Deck, e
 	return i, err
 }
 
-const deleteDeck = `-- name: DeleteDeck :exec
+const deleteDeck = `-- name: DeleteDeck :execrows
 DELETE FROM decks d
 USING folders f
 WHERE d.folder_id = f.id AND d.id = $1 AND f.owner_id = $2
@@ -57,9 +57,12 @@ type DeleteDeckParams struct {
 	OwnerID uuid.UUID
 }
 
-func (q *Queries) DeleteDeck(ctx context.Context, arg DeleteDeckParams) error {
-	_, err := q.db.Exec(ctx, deleteDeck, arg.ID, arg.OwnerID)
-	return err
+func (q *Queries) DeleteDeck(ctx context.Context, arg DeleteDeckParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteDeck, arg.ID, arg.OwnerID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const getDeck = `-- name: GetDeck :one
@@ -156,29 +159,41 @@ func (q *Queries) ListDecks(ctx context.Context, arg ListDecksParams) ([]ListDec
 
 const updateDeck = `-- name: UpdateDeck :one
 UPDATE decks d
-SET name = $3,
-    description = $4,
+SET name = $1,
+    description = $2,
     updated_at = now()
 FROM folders f
-WHERE d.folder_id = f.id AND d.id = $1 AND f.owner_id = $2
-RETURNING d.id, d.folder_id, d.name, d.description, d.created_at, d.updated_at
+WHERE d.folder_id = f.id AND d.id = $3 AND f.owner_id = $4
+RETURNING
+    d.id, d.folder_id, d.name, d.description, d.created_at, d.updated_at,
+    (SELECT count(*) FROM flashcards fc WHERE fc.deck_id = d.id)::int AS card_count
 `
 
 type UpdateDeckParams struct {
-	ID          uuid.UUID
-	OwnerID     uuid.UUID
 	Name        string
 	Description string
+	ID          uuid.UUID
+	OwnerID     uuid.UUID
 }
 
-func (q *Queries) UpdateDeck(ctx context.Context, arg UpdateDeckParams) (Deck, error) {
+type UpdateDeckRow struct {
+	ID          uuid.UUID
+	FolderID    uuid.UUID
+	Name        string
+	Description string
+	CreatedAt   pgtype.Timestamptz
+	UpdatedAt   pgtype.Timestamptz
+	CardCount   int32
+}
+
+func (q *Queries) UpdateDeck(ctx context.Context, arg UpdateDeckParams) (UpdateDeckRow, error) {
 	row := q.db.QueryRow(ctx, updateDeck,
-		arg.ID,
-		arg.OwnerID,
 		arg.Name,
 		arg.Description,
+		arg.ID,
+		arg.OwnerID,
 	)
-	var i Deck
+	var i UpdateDeckRow
 	err := row.Scan(
 		&i.ID,
 		&i.FolderID,
@@ -186,6 +201,7 @@ func (q *Queries) UpdateDeck(ctx context.Context, arg UpdateDeckParams) (Deck, e
 		&i.Description,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.CardCount,
 	)
 	return i, err
 }

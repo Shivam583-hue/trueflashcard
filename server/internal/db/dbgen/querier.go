@@ -15,9 +15,9 @@ type Querier interface {
 	CreateFlashcard(ctx context.Context, arg CreateFlashcardParams) (Flashcard, error)
 	CreateFolder(ctx context.Context, arg CreateFolderParams) (Folder, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
-	DeleteDeck(ctx context.Context, arg DeleteDeckParams) error
-	DeleteFlashcard(ctx context.Context, arg DeleteFlashcardParams) error
-	DeleteFolder(ctx context.Context, arg DeleteFolderParams) error
+	DeleteDeck(ctx context.Context, arg DeleteDeckParams) (int64, error)
+	DeleteFlashcard(ctx context.Context, arg DeleteFlashcardParams) (int64, error)
+	DeleteFolder(ctx context.Context, arg DeleteFolderParams) (int64, error)
 	GetDeck(ctx context.Context, arg GetDeckParams) (GetDeckRow, error)
 	GetFlashcard(ctx context.Context, arg GetFlashcardParams) (Flashcard, error)
 	GetFolder(ctx context.Context, arg GetFolderParams) (Folder, error)
@@ -27,7 +27,7 @@ type Querier interface {
 	ListFlashcards(ctx context.Context, arg ListFlashcardsParams) ([]Flashcard, error)
 	ListFolders(ctx context.Context, ownerID uuid.UUID) ([]Folder, error)
 	Ping(ctx context.Context) (int32, error)
-	UpdateDeck(ctx context.Context, arg UpdateDeckParams) (Deck, error)
+	UpdateDeck(ctx context.Context, arg UpdateDeckParams) (UpdateDeckRow, error)
 	UpdateFlashcard(ctx context.Context, arg UpdateFlashcardParams) (Flashcard, error)
 	UpdateFolder(ctx context.Context, arg UpdateFolderParams) (Folder, error)
 	UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) (User, error)

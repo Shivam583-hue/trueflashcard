@@ -7,6 +7,10 @@ import (
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
+
+	flashcardv1 "github.com/Shivam583-hue/trueflashcard/server/gen/flashcard/v1"
+	"github.com/Shivam583-hue/trueflashcard/server/internal/db/dbgen"
+	"github.com/Shivam583-hue/trueflashcard/server/internal/service"
 )
 
 type Server struct {
@@ -14,7 +18,7 @@ type Server struct {
 	listener net.Listener
 }
 
-func New(address string) (*Server, error) {
+func New(address string, q dbgen.Querier) (*Server, error) {
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		return nil, err
@@ -25,6 +29,12 @@ func New(address string) (*Server, error) {
 	healthServer := health.NewServer()
 	healthServer.SetServingStatus("", healthpb.HealthCheckResponse_SERVING)
 	healthpb.RegisterHealthServer(grpcServer, healthServer)
+
+	if q != nil {
+		flashcardv1.RegisterFolderServiceServer(grpcServer, service.NewFolderService(q))
+		flashcardv1.RegisterDeckServiceServer(grpcServer, service.NewDeckService(q))
+		flashcardv1.RegisterFlashcardServiceServer(grpcServer, service.NewFlashcardService(q))
+	}
 
 	reflection.Register(grpcServer)
 

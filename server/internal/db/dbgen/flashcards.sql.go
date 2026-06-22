@@ -15,28 +15,28 @@ const createFlashcard = `-- name: CreateFlashcard :one
 INSERT INTO flashcards (deck_id, front, back, position)
 SELECT
     d.id,
-    $3,
-    $4,
+    $1,
+    $2,
     COALESCE((SELECT max(fc.position) + 1 FROM flashcards fc WHERE fc.deck_id = d.id), 0)
 FROM decks d
 JOIN folders f ON f.id = d.folder_id
-WHERE d.id = $1 AND f.owner_id = $2
+WHERE d.id = $3 AND f.owner_id = $4
 RETURNING id, deck_id, front, back, position, created_at, updated_at
 `
 
 type CreateFlashcardParams struct {
-	ID      uuid.UUID
-	OwnerID uuid.UUID
 	Front   string
 	Back    string
+	DeckID  uuid.UUID
+	OwnerID uuid.UUID
 }
 
 func (q *Queries) CreateFlashcard(ctx context.Context, arg CreateFlashcardParams) (Flashcard, error) {
 	row := q.db.QueryRow(ctx, createFlashcard,
-		arg.ID,
-		arg.OwnerID,
 		arg.Front,
 		arg.Back,
+		arg.DeckID,
+		arg.OwnerID,
 	)
 	var i Flashcard
 	err := row.Scan(
@@ -51,7 +51,7 @@ func (q *Queries) CreateFlashcard(ctx context.Context, arg CreateFlashcardParams
 	return i, err
 }
 
-const deleteFlashcard = `-- name: DeleteFlashcard :exec
+const deleteFlashcard = `-- name: DeleteFlashcard :execrows
 DELETE FROM flashcards fc
 USING decks d, folders f
 WHERE fc.deck_id = d.id AND d.folder_id = f.id AND fc.id = $1 AND f.owner_id = $2
@@ -62,9 +62,12 @@ type DeleteFlashcardParams struct {
 	OwnerID uuid.UUID
 }
 
-func (q *Queries) DeleteFlashcard(ctx context.Context, arg DeleteFlashcardParams) error {
-	_, err := q.db.Exec(ctx, deleteFlashcard, arg.ID, arg.OwnerID)
-	return err
+func (q *Queries) DeleteFlashcard(ctx context.Context, arg DeleteFlashcardParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteFlashcard, arg.ID, arg.OwnerID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const getFlashcard = `-- name: GetFlashcard :one
@@ -139,31 +142,31 @@ func (q *Queries) ListFlashcards(ctx context.Context, arg ListFlashcardsParams) 
 
 const updateFlashcard = `-- name: UpdateFlashcard :one
 UPDATE flashcards fc
-SET front = $3,
-    back = $4,
-    position = $5,
+SET front = $1,
+    back = $2,
+    position = $3,
     updated_at = now()
 FROM decks d
 JOIN folders f ON f.id = d.folder_id
-WHERE fc.deck_id = d.id AND fc.id = $1 AND f.owner_id = $2
+WHERE fc.deck_id = d.id AND fc.id = $4 AND f.owner_id = $5
 RETURNING fc.id, fc.deck_id, fc.front, fc.back, fc.position, fc.created_at, fc.updated_at
 `
 
 type UpdateFlashcardParams struct {
-	ID       uuid.UUID
-	OwnerID  uuid.UUID
 	Front    string
 	Back     string
 	Position int32
+	ID       uuid.UUID
+	OwnerID  uuid.UUID
 }
 
 func (q *Queries) UpdateFlashcard(ctx context.Context, arg UpdateFlashcardParams) (Flashcard, error) {
 	row := q.db.QueryRow(ctx, updateFlashcard,
-		arg.ID,
-		arg.OwnerID,
 		arg.Front,
 		arg.Back,
 		arg.Position,
+		arg.ID,
+		arg.OwnerID,
 	)
 	var i Flashcard
 	err := row.Scan(

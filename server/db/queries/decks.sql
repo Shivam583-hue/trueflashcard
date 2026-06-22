@@ -1,8 +1,8 @@
 -- name: CreateDeck :one
 INSERT INTO decks (folder_id, name, description)
-SELECT f.id, $3, $4
+SELECT f.id, @name, @description
 FROM folders f
-WHERE f.id = $1 AND f.owner_id = $2
+WHERE f.id = @folder_id AND f.owner_id = @owner_id
 RETURNING *;
 
 -- name: GetDeck :one
@@ -11,7 +11,7 @@ SELECT
     (SELECT count(*) FROM flashcards fc WHERE fc.deck_id = d.id)::int AS card_count
 FROM decks d
 JOIN folders f ON f.id = d.folder_id
-WHERE d.id = $1 AND f.owner_id = $2;
+WHERE d.id = @id AND f.owner_id = @owner_id;
 
 -- name: ListDecks :many
 SELECT
@@ -19,19 +19,21 @@ SELECT
     (SELECT count(*) FROM flashcards fc WHERE fc.deck_id = d.id)::int AS card_count
 FROM decks d
 JOIN folders f ON f.id = d.folder_id
-WHERE d.folder_id = $1 AND f.owner_id = $2
+WHERE d.folder_id = @folder_id AND f.owner_id = @owner_id
 ORDER BY d.created_at ASC;
 
 -- name: UpdateDeck :one
 UPDATE decks d
-SET name = $3,
-    description = $4,
+SET name = @name,
+    description = @description,
     updated_at = now()
 FROM folders f
-WHERE d.folder_id = f.id AND d.id = $1 AND f.owner_id = $2
-RETURNING d.*;
+WHERE d.folder_id = f.id AND d.id = @id AND f.owner_id = @owner_id
+RETURNING
+    d.*,
+    (SELECT count(*) FROM flashcards fc WHERE fc.deck_id = d.id)::int AS card_count;
 
--- name: DeleteDeck :exec
+-- name: DeleteDeck :execrows
 DELETE FROM decks d
 USING folders f
-WHERE d.folder_id = f.id AND d.id = $1 AND f.owner_id = $2;
+WHERE d.folder_id = f.id AND d.id = @id AND f.owner_id = @owner_id;
