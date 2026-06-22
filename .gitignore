@@ -1,0 +1,32 @@
+# Agent / local config (never commit)
+.agents/
+.claude.local.md
+CLAUDE.local.md
+CLAUDE.md
+skills-lock.json
+
+# Node / Next.js
+node_modules/
+.pnpm-store/
+web/.next/
+web/out/
+web/build/
+web/next-env.d.ts
+*.tsbuildinfo
+
+# Go
+server/bin/
+*.exe
+*.test
+*.out
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.log

@@ -1,0 +1,187 @@
+syntax = "proto3";
+
+package flashcard.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Folder {
+  string id = 1;
+  string owner_id = 2;
+  string name = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message Deck {
+  string id = 1;
+  string folder_id = 2;
+  string name = 3;
+  string description = 4;
+  int32 card_count = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Flashcard {
+  string id = 1;
+  string deck_id = 2;
+  string front = 3;
+  string back = 4;
+  int32 position = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message StudyProgress {
+  string deck_id = 1;
+  int32 total = 2;
+  int32 reviewed = 3;
+  int32 remaining = 4;
+  int32 current_position = 5;
+}
+
+message CreateFolderRequest {
+  string name = 1;
+}
+
+message CreateFolderResponse {
+  Folder folder = 1;
+}
+
+message GetFolderRequest {
+  string id = 1;
+}
+
+message GetFolderResponse {
+  Folder folder = 1;
+}
+
+message ListFoldersRequest {}
+
+message ListFoldersResponse {
+  repeated Folder folders = 1;
+}
+
+message UpdateFolderRequest {
+  string id = 1;
+  string name = 2;
+}
+
+message UpdateFolderResponse {
+  Folder folder = 1;
+}
+
+message DeleteFolderRequest {
+  string id = 1;
+}
+
+message DeleteFolderResponse {}
+
+service FolderService {
+  rpc CreateFolder(CreateFolderRequest) returns (CreateFolderResponse);
+  rpc GetFolder(GetFolderRequest) returns (GetFolderResponse);
+  rpc ListFolders(ListFoldersRequest) returns (ListFoldersResponse);
+  rpc UpdateFolder(UpdateFolderRequest) returns (UpdateFolderResponse);
+  rpc DeleteFolder(DeleteFolderRequest) returns (DeleteFolderResponse);
+}
+
+message CreateDeckRequest {
+  string folder_id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message CreateDeckResponse {
+  Deck deck = 1;
+}
+
+message GetDeckRequest {
+  string id = 1;
+}
+
+message GetDeckResponse {
+  Deck deck = 1;
+}
+
+message ListDecksRequest {
+  string folder_id = 1;
+}
+
+message ListDecksResponse {
+  repeated Deck decks = 1;
+}
+
+message UpdateDeckRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message UpdateDeckResponse {
+  Deck deck = 1;
+}
+
+message DeleteDeckRequest {
+  string id = 1;
+}
+
+message DeleteDeckResponse {}
+
+service DeckService {
+  rpc CreateDeck(CreateDeckRequest) returns (CreateDeckResponse);
+  rpc GetDeck(GetDeckRequest) returns (GetDeckResponse);
+  rpc ListDecks(ListDecksRequest) returns (ListDecksResponse);
+  rpc UpdateDeck(UpdateDeckRequest) returns (UpdateDeckResponse);
+  rpc DeleteDeck(DeleteDeckRequest) returns (DeleteDeckResponse);
+}
+
+message CreateFlashcardRequest {
+  string deck_id = 1;
+  string front = 2;
+  string back = 3;
+}
+
+message CreateFlashcardResponse {
+  Flashcard flashcard = 1;
+}
+
+message GetFlashcardRequest {
+  string id = 1;
+}
+
+message GetFlashcardResponse {
+  Flashcard flashcard = 1;
+}
+
+message ListFlashcardsRequest {
+  string deck_id = 1;
+}
+
+message ListFlashcardsResponse {
+  repeated Flashcard flashcards = 1;
+}
+
+message UpdateFlashcardRequest {
+  string id = 1;
+  string front = 2;
+  string back = 3;
+  int32 position = 4;
+}
+
+message UpdateFlashcardResponse {
+  Flashcard flashcard = 1;
+}
+
+message DeleteFlashcardRequest {
+  string id = 1;
+}
+
+message DeleteFlashcardResponse {}
+
+service FlashcardService {
+  rpc CreateFlashcard(CreateFlashcardRequest) returns (CreateFlashcardResponse);
+  rpc GetFlashcard(GetFlashcardRequest) returns (GetFlashcardResponse);
+  rpc ListFlashcards(ListFlashcardsRequest) returns (ListFlashcardsResponse);
+  rpc UpdateFlashcard(UpdateFlashcardRequest) returns (UpdateFlashcardResponse);
+  rpc DeleteFlashcard(DeleteFlashcardRequest) returns (DeleteFlashcardResponse);
+}
