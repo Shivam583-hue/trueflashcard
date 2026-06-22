@@ -21,7 +21,7 @@ import (
 
 func main() {
 	grpcAddress := envOr("GRPC_ADDRESS", ":50051")
-	httpAddress := envOr("HTTP_ADDRESS", ":8080")
+	httpAddress := httpListenAddress()
 
 	ctx := context.Background()
 
@@ -124,4 +124,15 @@ func envOr(key, fallback string) string {
 		return v
 	}
 	return fallback
+}
+
+// httpListenAddress binds the HTTP server to the port assigned by the host
+// (Render and most PaaS set PORT), falling back to 8080. It always binds
+// 0.0.0.0 so the service is reachable from outside the container.
+func httpListenAddress() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	return "0.0.0.0:" + port
 }
