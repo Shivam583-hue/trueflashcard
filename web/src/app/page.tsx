@@ -1,26 +1,26 @@
-import Link from "next/link";
+import { CTA } from "@/components/landing/cta";
+import { Features } from "@/components/landing/features";
+import { Hero } from "@/components/landing/hero";
+import { LandingNav } from "@/components/landing/nav";
+import { Logo } from "@/components/landing/logo";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-neutral-950 via-neutral-900 to-black px-6">
-      <div className="flex flex-col items-center gap-4 text-center">
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
-          Flashcards
-        </span>
-        <h1 className="text-4xl font-semibold tracking-tight text-neutral-100 sm:text-5xl">
-          Learn anything, one card at a time.
-        </h1>
-        <p className="max-w-sm text-sm leading-relaxed text-neutral-400">
-          Organize folders and decks, then study with focus and track your
-          progress.
-        </p>
-        <Link
-          href="/login"
-          className="mt-4 rounded-lg border border-neutral-800 bg-neutral-900/60 px-5 py-2.5 text-sm font-medium text-neutral-100 transition-colors hover:border-neutral-700 hover:bg-neutral-800/60"
-        >
-          Sign in
-        </Link>
-      </div>
-    </main>
+    <div className="min-h-screen bg-[#08090a]">
+      <LandingNav />
+      <main>
+        <Hero />
+        <Features />
+        <CTA />
+      </main>
+      <footer className="border-t border-neutral-900 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
+          <Logo />
+          <p className="text-xs text-neutral-600">
+            © {new Date().getFullYear()} Flashcards
+          </p>
+        </div>
+      </footer>
+    </div>
   );
 }

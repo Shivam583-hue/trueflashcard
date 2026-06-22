@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/Shivam583-hue/trueflashcard/server/internal/auth"
+	"github.com/Shivam583-hue/trueflashcard/server/internal/connectapi"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/db"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/db/dbgen"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/httpauth"
@@ -40,12 +41,12 @@ func main() {
 	}
 
 	sessions := buildSessionManager()
-	httpServer := buildAuthServer(httpAddress, querier, sessions)
+	httpServer := buildHTTPServer(httpAddress, querier, sessions)
 	if httpServer != nil {
 		go func() {
-			log.Printf("auth HTTP server listening on %s", httpAddress)
+			log.Printf("HTTP server listening on %s (Connect API + auth)", httpAddress)
 			if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-				log.Fatalf("auth server stopped: %v", err)
+				log.Fatalf("HTTP server stopped: %v", err)
 			}
 		}()
 	}
@@ -86,23 +87,31 @@ func buildSessionManager() *auth.SessionManager {
 	return sessions
 }
 
-func buildAuthServer(address string, querier dbgen.Querier, sessions *auth.SessionManager) *http.Server {
+func buildHTTPServer(address string, querier dbgen.Querier, sessions *auth.SessionManager) *http.Server {
 	if querier == nil || sessions == nil {
 		return nil
 	}
+
+	appURL := envOr("APP_URL", "http://localhost:3000")
+	mux := http.NewServeMux()
+
+	mux.Handle("/", connectapi.NewHandler(querier, sessions, appURL))
+	log.Println("Connect API enabled")
+
 	oauth, err := auth.NewGoogleOAuth()
-	if errors.Is(err, auth.ErrMissingOAuthConfig) {
+	switch {
+	case errors.Is(err, auth.ErrMissingOAuthConfig):
 		log.Println("Google OAuth env not set; login flow is disabled")
-		return nil
-	}
-	if err != nil {
+	case err != nil:
 		log.Fatalf("failed to initialize Google OAuth: %v", err)
+	default:
+		mux.Handle("/auth/", httpauth.NewHandler(oauth, sessions, querier).Routes())
+		log.Println("Google OAuth login enabled")
 	}
 
-	handler := httpauth.NewHandler(oauth, sessions, querier)
 	return &http.Server{
 		Addr:              address,
-		Handler:           handler.Routes(),
+		Handler:           mux,
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 }
