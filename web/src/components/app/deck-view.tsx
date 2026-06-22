@@ -7,6 +7,7 @@ import {
   PencilSimpleIcon,
   PlayIcon,
   PlusIcon,
+  UploadSimpleIcon,
 } from "@phosphor-icons/react";
 
 import { deckClient, flashcardClient, folderClient } from "@/lib/client";
@@ -16,6 +17,7 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/app/breadcrumbs";
 import { ConfirmDelete } from "@/components/app/confirm-delete";
 import { FlashcardForm } from "@/components/app/flashcard-form";
+import { ImportDialog } from "@/components/app/import-dialog";
 import { EmptyState, ErrorState } from "@/components/app/states";
 
 type Card = { id: string; front: string; back: string; position: number };
@@ -62,6 +64,12 @@ export function DeckView({
   }, [folderId, deckId]);
 
   const [creating, setCreating] = useState(false);
+  const [importing, setImporting] = useState(false);
+
+  const addCards = useCallback(
+    (cards: Card[]) => setItems((prev) => [...prev, ...cards]),
+    [setItems],
+  );
 
   const create = useCallback(
     async (front: string, back: string) => {
@@ -122,12 +130,28 @@ export function DeckView({
               Review
             </ButtonLink>
           ) : null}
+          <Button
+            variant="ghost"
+            onClick={() => setImporting(true)}
+            disabled={status === "error"}
+          >
+            <UploadSimpleIcon size={16} />
+            Import
+          </Button>
           <Button onClick={() => setCreating(true)} disabled={status === "error"}>
             <PlusIcon size={16} />
             Add card
           </Button>
         </div>
       </div>
+
+      <ImportDialog
+        open={importing}
+        onClose={() => setImporting(false)}
+        mode="cards"
+        deckId={deckId}
+        onImportedCards={addCards}
+      />
 
       <div className="mt-6 space-y-3">
         {creating && (

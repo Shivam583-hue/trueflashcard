@@ -7,6 +7,7 @@ import {
   CardsThreeIcon,
   PencilSimpleIcon,
   PlusIcon,
+  UploadSimpleIcon,
 } from "@phosphor-icons/react";
 
 import { deckClient, folderClient } from "@/lib/client";
@@ -15,6 +16,7 @@ import { easeEmphasized } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/app/breadcrumbs";
 import { ConfirmDelete } from "@/components/app/confirm-delete";
+import { ImportDialog } from "@/components/app/import-dialog";
 import { InlineNameForm } from "@/components/app/inline-name-form";
 import {
   CardSkeletons,
@@ -55,6 +57,12 @@ export function DecksView({ folderId }: { folderId: string }) {
   }, [folderId]);
 
   const [creating, setCreating] = useState(false);
+  const [importing, setImporting] = useState(false);
+
+  const addDeck = useCallback(
+    (deck: Deck) => setItems((prev) => [...prev, deck]),
+    [setItems],
+  );
 
   const create = useCallback(
     async (name: string) => {
@@ -103,16 +111,30 @@ export function DecksView({ folderId }: { folderId: string }) {
             onCancel={() => setCreating(false)}
           />
         ) : (
-          <Button
-            variant="ghost"
-            onClick={() => setCreating(true)}
-            disabled={status === "error"}
-          >
-            <PlusIcon size={16} />
-            New deck
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => setImporting(true)}
+              disabled={status === "error"}
+            >
+              <UploadSimpleIcon size={16} />
+              Import
+            </Button>
+            <Button onClick={() => setCreating(true)} disabled={status === "error"}>
+              <PlusIcon size={16} />
+              New deck
+            </Button>
+          </div>
         )}
       </div>
+
+      <ImportDialog
+        open={importing}
+        onClose={() => setImporting(false)}
+        mode="deck"
+        folderId={folderId}
+        onImportedDeck={addDeck}
+      />
 
       <div className="mt-6">
         {status === "loading" && <CardSkeletons />}
