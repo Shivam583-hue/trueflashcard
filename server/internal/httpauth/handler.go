@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Shivam583-hue/trueflashcard/server/internal/auth"
@@ -24,6 +25,7 @@ type Handler struct {
 	users    dbgen.Querier
 	appURL   string
 	secure   bool
+	sameSite http.SameSite
 }
 
 func NewHandler(oauth *auth.GoogleOAuth, sessions *auth.SessionManager, users dbgen.Querier) *Handler {
@@ -31,12 +33,24 @@ func NewHandler(oauth *auth.GoogleOAuth, sessions *auth.SessionManager, users db
 	if appURL == "" {
 		appURL = "http://localhost:3000"
 	}
+
+	secure := os.Getenv("COOKIE_SECURE") == "true"
+	sameSite := http.SameSiteLaxMode
+	// When the frontend and API live on different sites (e.g. Vercel + a
+	// tunneled API domain), the session cookie must be SameSite=None to be
+	// sent on cross-site fetches, which the browser only honors when Secure.
+	if strings.EqualFold(os.Getenv("COOKIE_SAMESITE"), "none") {
+		sameSite = http.SameSiteNoneMode
+		secure = true
+	}
+
 	return &Handler{
 		oauth:    oauth,
 		sessions: sessions,
 		users:    users,
 		appURL:   appURL,
-		secure:   os.Getenv("COOKIE_SECURE") == "true",
+		secure:   secure,
+		sameSite: sameSite,
 	}
 }
 
@@ -62,7 +76,7 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   stateTTLSeconds,
 		HttpOnly: true,
 		Secure:   h.secure,
-		SameSite: http.SameSiteLaxMode,
+		SameSite: h.sameSite,
 	})
 	http.Redirect(w, r, h.oauth.AuthCodeURL(state), http.StatusFound)
 }
@@ -109,7 +123,7 @@ func (h *Handler) callback(w http.ResponseWriter, r *http.Request) {
 		Expires:  expiresAt,
 		HttpOnly: true,
 		Secure:   h.secure,
-		SameSite: http.SameSiteLaxMode,
+		SameSite: h.sameSite,
 	})
 	http.Redirect(w, r, h.appURL+"/home", http.StatusFound)
 }
@@ -151,7 +165,7 @@ func (h *Handler) clearCookie(w http.ResponseWriter, name string) {
 		Expires:  time.Unix(0, 0),
 		HttpOnly: true,
 		Secure:   h.secure,
-		SameSite: http.SameSiteLaxMode,
+		SameSite: h.sameSite,
 	})
 }
 

@@ -1,0 +1,10 @@
+# Place at /etc/cloudflared/config.yml (or ~/.cloudflared/config.yml).
+# Replace <TUNNEL_ID> with the id printed by `cloudflared tunnel create`.
+
+tunnel: <TUNNEL_ID>
+credentials-file: /root/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: api.nemportfolio.in
+    service: http://localhost:8080
+  - service: http_status:404

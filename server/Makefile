@@ -1,11 +1,15 @@
-# Server build tooling (used by Render)
-.PHONY: build start run
+# Server build tooling
+.PHONY: build build-linux start run
 
-## build: compile the server binary — use as Render's Build Command
+## build: compile the server binary for the local platform
 build:
 	go build -o bin/server ./cmd/server
 
-## start: run the compiled binary — use as Render's Start Command
+## build-linux: cross-compile a static linux binary for a VPS (set GOARCH=arm64 if your VPS is ARM)
+build-linux:
+	CGO_ENABLED=0 GOOS=linux GOARCH=$${GOARCH:-amd64} go build -ldflags "-s -w" -o bin/server-linux ./cmd/server
+
+## start: run the compiled binary
 start:
 	./bin/server
 
