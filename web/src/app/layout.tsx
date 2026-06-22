@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flashcards",
+  title: "True Flashcards",
   description: "A minimalist flashcard app.",
 };
 
