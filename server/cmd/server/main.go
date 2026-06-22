@@ -4,20 +4,22 @@ import (
 	"context"
 	"errors"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
+	"github.com/Shivam583-hue/trueflashcard/server/internal/auth"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/db"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/db/dbgen"
+	"github.com/Shivam583-hue/trueflashcard/server/internal/httpauth"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/server"
 )
 
 func main() {
-	address := os.Getenv("GRPC_ADDRESS")
-	if address == "" {
-		address = ":50051"
-	}
+	grpcAddress := envOr("GRPC_ADDRESS", ":50051")
+	httpAddress := envOr("HTTP_ADDRESS", ":8080")
 
 	ctx := context.Background()
 
@@ -37,11 +39,21 @@ func main() {
 		log.Println("database connection established")
 	}
 
-	srv, err := server.New(address, querier)
+	sessions := buildSessionManager()
+	httpServer := buildAuthServer(httpAddress, querier, sessions)
+	if httpServer != nil {
+		go func() {
+			log.Printf("auth HTTP server listening on %s", httpAddress)
+			if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+				log.Fatalf("auth server stopped: %v", err)
+			}
+		}()
+	}
+
+	srv, err := server.New(grpcAddress, querier, sessions)
 	if err != nil {
 		log.Fatalf("failed to create server: %v", err)
 	}
-
 	go func() {
 		log.Printf("gRPC server listening on %s", srv.Address())
 		if err := srv.Serve(); err != nil {
@@ -54,5 +66,50 @@ func main() {
 	<-stop
 
 	log.Println("shutting down")
+	if httpServer != nil {
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		_ = httpServer.Shutdown(shutdownCtx)
+	}
 	srv.Stop()
+}
+
+func buildSessionManager() *auth.SessionManager {
+	sessions, err := auth.NewSessionManager()
+	if errors.Is(err, auth.ErrMissingJWTSecret) {
+		log.Println("JWT_SECRET not set; sessions and authenticated RPCs are disabled")
+		return nil
+	}
+	if err != nil {
+		log.Fatalf("failed to initialize sessions: %v", err)
+	}
+	return sessions
+}
+
+func buildAuthServer(address string, querier dbgen.Querier, sessions *auth.SessionManager) *http.Server {
+	if querier == nil || sessions == nil {
+		return nil
+	}
+	oauth, err := auth.NewGoogleOAuth()
+	if errors.Is(err, auth.ErrMissingOAuthConfig) {
+		log.Println("Google OAuth env not set; login flow is disabled")
+		return nil
+	}
+	if err != nil {
+		log.Fatalf("failed to initialize Google OAuth: %v", err)
+	}
+
+	handler := httpauth.NewHandler(oauth, sessions, querier)
+	return &http.Server{
+		Addr:              address,
+		Handler:           handler.Routes(),
+		ReadHeaderTimeout: 10 * time.Second,
+	}
+}
+
+func envOr(key, fallback string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return fallback
 }

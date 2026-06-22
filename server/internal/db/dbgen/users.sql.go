@@ -103,3 +103,34 @@ func (q *Queries) UpdateUserProfile(ctx context.Context, arg UpdateUserProfilePa
 	)
 	return i, err
 }
+
+const upsertUserByGoogleSubject = `-- name: UpsertUserByGoogleSubject :one
+INSERT INTO users (google_subject, email, display_name)
+VALUES ($1, $2, $3)
+ON CONFLICT (google_subject)
+DO UPDATE SET
+    email = EXCLUDED.email,
+    display_name = EXCLUDED.display_name,
+    updated_at = now()
+RETURNING id, google_subject, email, display_name, created_at, updated_at
+`
+
+type UpsertUserByGoogleSubjectParams struct {
+	GoogleSubject string
+	Email         string
+	DisplayName   string
+}
+
+func (q *Queries) UpsertUserByGoogleSubject(ctx context.Context, arg UpsertUserByGoogleSubjectParams) (User, error) {
+	row := q.db.QueryRow(ctx, upsertUserByGoogleSubject, arg.GoogleSubject, arg.Email, arg.DisplayName)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.GoogleSubject,
+		&i.Email,
+		&i.DisplayName,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}

@@ -31,6 +31,7 @@ type Querier interface {
 	UpdateFlashcard(ctx context.Context, arg UpdateFlashcardParams) (Flashcard, error)
 	UpdateFolder(ctx context.Context, arg UpdateFolderParams) (Folder, error)
 	UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) (User, error)
+	UpsertUserByGoogleSubject(ctx context.Context, arg UpsertUserByGoogleSubjectParams) (User, error)
 }
 
 var _ Querier = (*Queries)(nil)

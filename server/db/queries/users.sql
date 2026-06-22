@@ -11,6 +11,16 @@ WHERE id = $1;
 SELECT * FROM users
 WHERE google_subject = $1;
 
+-- name: UpsertUserByGoogleSubject :one
+INSERT INTO users (google_subject, email, display_name)
+VALUES (@google_subject, @email, @display_name)
+ON CONFLICT (google_subject)
+DO UPDATE SET
+    email = EXCLUDED.email,
+    display_name = EXCLUDED.display_name,
+    updated_at = now()
+RETURNING *;
+
 -- name: UpdateUserProfile :one
 UPDATE users
 SET email = $2,

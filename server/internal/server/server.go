@@ -9,6 +9,7 @@ import (
 	"google.golang.org/grpc/reflection"
 
 	flashcardv1 "github.com/Shivam583-hue/trueflashcard/server/gen/flashcard/v1"
+	"github.com/Shivam583-hue/trueflashcard/server/internal/auth"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/db/dbgen"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/service"
 )
@@ -18,13 +19,17 @@ type Server struct {
 	listener net.Listener
 }
 
-func New(address string, q dbgen.Querier) (*Server, error) {
+func New(address string, q dbgen.Querier, sessions *auth.SessionManager) (*Server, error) {
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		return nil, err
 	}
 
-	grpcServer := grpc.NewServer()
+	var opts []grpc.ServerOption
+	if sessions != nil {
+		opts = append(opts, grpc.UnaryInterceptor(auth.UnaryAuthInterceptor(sessions)))
+	}
+	grpcServer := grpc.NewServer(opts...)
 
 	healthServer := health.NewServer()
 	healthServer.SetServingStatus("", healthpb.HealthCheckResponse_SERVING)
