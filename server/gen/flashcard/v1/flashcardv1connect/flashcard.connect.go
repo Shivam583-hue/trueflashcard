@@ -61,6 +61,8 @@ const (
 	DeckServiceUpdateDeckProcedure = "/flashcard.v1.DeckService/UpdateDeck"
 	// DeckServiceDeleteDeckProcedure is the fully-qualified name of the DeckService's DeleteDeck RPC.
 	DeckServiceDeleteDeckProcedure = "/flashcard.v1.DeckService/DeleteDeck"
+	// DeckServiceImportDeckProcedure is the fully-qualified name of the DeckService's ImportDeck RPC.
+	DeckServiceImportDeckProcedure = "/flashcard.v1.DeckService/ImportDeck"
 	// FlashcardServiceCreateFlashcardProcedure is the fully-qualified name of the FlashcardService's
 	// CreateFlashcard RPC.
 	FlashcardServiceCreateFlashcardProcedure = "/flashcard.v1.FlashcardService/CreateFlashcard"
@@ -76,6 +78,9 @@ const (
 	// FlashcardServiceDeleteFlashcardProcedure is the fully-qualified name of the FlashcardService's
 	// DeleteFlashcard RPC.
 	FlashcardServiceDeleteFlashcardProcedure = "/flashcard.v1.FlashcardService/DeleteFlashcard"
+	// FlashcardServiceImportFlashcardsProcedure is the fully-qualified name of the FlashcardService's
+	// ImportFlashcards RPC.
+	FlashcardServiceImportFlashcardsProcedure = "/flashcard.v1.FlashcardService/ImportFlashcards"
 )
 
 // FolderServiceClient is a client for the flashcard.v1.FolderService service.
@@ -259,6 +264,7 @@ type DeckServiceClient interface {
 	ListDecks(context.Context, *connect.Request[v1.ListDecksRequest]) (*connect.Response[v1.ListDecksResponse], error)
 	UpdateDeck(context.Context, *connect.Request[v1.UpdateDeckRequest]) (*connect.Response[v1.UpdateDeckResponse], error)
 	DeleteDeck(context.Context, *connect.Request[v1.DeleteDeckRequest]) (*connect.Response[v1.DeleteDeckResponse], error)
+	ImportDeck(context.Context, *connect.Request[v1.ImportDeckRequest]) (*connect.Response[v1.ImportDeckResponse], error)
 }
 
 // NewDeckServiceClient constructs a client for the flashcard.v1.DeckService service. By default, it
@@ -302,6 +308,12 @@ func NewDeckServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithSchema(deckServiceMethods.ByName("DeleteDeck")),
 			connect.WithClientOptions(opts...),
 		),
+		importDeck: connect.NewClient[v1.ImportDeckRequest, v1.ImportDeckResponse](
+			httpClient,
+			baseURL+DeckServiceImportDeckProcedure,
+			connect.WithSchema(deckServiceMethods.ByName("ImportDeck")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -312,6 +324,7 @@ type deckServiceClient struct {
 	listDecks  *connect.Client[v1.ListDecksRequest, v1.ListDecksResponse]
 	updateDeck *connect.Client[v1.UpdateDeckRequest, v1.UpdateDeckResponse]
 	deleteDeck *connect.Client[v1.DeleteDeckRequest, v1.DeleteDeckResponse]
+	importDeck *connect.Client[v1.ImportDeckRequest, v1.ImportDeckResponse]
 }
 
 // CreateDeck calls flashcard.v1.DeckService.CreateDeck.
@@ -339,6 +352,11 @@ func (c *deckServiceClient) DeleteDeck(ctx context.Context, req *connect.Request
 	return c.deleteDeck.CallUnary(ctx, req)
 }
 
+// ImportDeck calls flashcard.v1.DeckService.ImportDeck.
+func (c *deckServiceClient) ImportDeck(ctx context.Context, req *connect.Request[v1.ImportDeckRequest]) (*connect.Response[v1.ImportDeckResponse], error) {
+	return c.importDeck.CallUnary(ctx, req)
+}
+
 // DeckServiceHandler is an implementation of the flashcard.v1.DeckService service.
 type DeckServiceHandler interface {
 	CreateDeck(context.Context, *connect.Request[v1.CreateDeckRequest]) (*connect.Response[v1.CreateDeckResponse], error)
@@ -346,6 +364,7 @@ type DeckServiceHandler interface {
 	ListDecks(context.Context, *connect.Request[v1.ListDecksRequest]) (*connect.Response[v1.ListDecksResponse], error)
 	UpdateDeck(context.Context, *connect.Request[v1.UpdateDeckRequest]) (*connect.Response[v1.UpdateDeckResponse], error)
 	DeleteDeck(context.Context, *connect.Request[v1.DeleteDeckRequest]) (*connect.Response[v1.DeleteDeckResponse], error)
+	ImportDeck(context.Context, *connect.Request[v1.ImportDeckRequest]) (*connect.Response[v1.ImportDeckResponse], error)
 }
 
 // NewDeckServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -385,6 +404,12 @@ func NewDeckServiceHandler(svc DeckServiceHandler, opts ...connect.HandlerOption
 		connect.WithSchema(deckServiceMethods.ByName("DeleteDeck")),
 		connect.WithHandlerOptions(opts...),
 	)
+	deckServiceImportDeckHandler := connect.NewUnaryHandler(
+		DeckServiceImportDeckProcedure,
+		svc.ImportDeck,
+		connect.WithSchema(deckServiceMethods.ByName("ImportDeck")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/flashcard.v1.DeckService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeckServiceCreateDeckProcedure:
@@ -397,6 +422,8 @@ func NewDeckServiceHandler(svc DeckServiceHandler, opts ...connect.HandlerOption
 			deckServiceUpdateDeckHandler.ServeHTTP(w, r)
 		case DeckServiceDeleteDeckProcedure:
 			deckServiceDeleteDeckHandler.ServeHTTP(w, r)
+		case DeckServiceImportDeckProcedure:
+			deckServiceImportDeckHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -426,6 +453,10 @@ func (UnimplementedDeckServiceHandler) DeleteDeck(context.Context, *connect.Requ
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.DeckService.DeleteDeck is not implemented"))
 }
 
+func (UnimplementedDeckServiceHandler) ImportDeck(context.Context, *connect.Request[v1.ImportDeckRequest]) (*connect.Response[v1.ImportDeckResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.DeckService.ImportDeck is not implemented"))
+}
+
 // FlashcardServiceClient is a client for the flashcard.v1.FlashcardService service.
 type FlashcardServiceClient interface {
 	CreateFlashcard(context.Context, *connect.Request[v1.CreateFlashcardRequest]) (*connect.Response[v1.CreateFlashcardResponse], error)
@@ -433,6 +464,7 @@ type FlashcardServiceClient interface {
 	ListFlashcards(context.Context, *connect.Request[v1.ListFlashcardsRequest]) (*connect.Response[v1.ListFlashcardsResponse], error)
 	UpdateFlashcard(context.Context, *connect.Request[v1.UpdateFlashcardRequest]) (*connect.Response[v1.UpdateFlashcardResponse], error)
 	DeleteFlashcard(context.Context, *connect.Request[v1.DeleteFlashcardRequest]) (*connect.Response[v1.DeleteFlashcardResponse], error)
+	ImportFlashcards(context.Context, *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error)
 }
 
 // NewFlashcardServiceClient constructs a client for the flashcard.v1.FlashcardService service. By
@@ -476,16 +508,23 @@ func NewFlashcardServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(flashcardServiceMethods.ByName("DeleteFlashcard")),
 			connect.WithClientOptions(opts...),
 		),
+		importFlashcards: connect.NewClient[v1.ImportFlashcardsRequest, v1.ImportFlashcardsResponse](
+			httpClient,
+			baseURL+FlashcardServiceImportFlashcardsProcedure,
+			connect.WithSchema(flashcardServiceMethods.ByName("ImportFlashcards")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // flashcardServiceClient implements FlashcardServiceClient.
 type flashcardServiceClient struct {
-	createFlashcard *connect.Client[v1.CreateFlashcardRequest, v1.CreateFlashcardResponse]
-	getFlashcard    *connect.Client[v1.GetFlashcardRequest, v1.GetFlashcardResponse]
-	listFlashcards  *connect.Client[v1.ListFlashcardsRequest, v1.ListFlashcardsResponse]
-	updateFlashcard *connect.Client[v1.UpdateFlashcardRequest, v1.UpdateFlashcardResponse]
-	deleteFlashcard *connect.Client[v1.DeleteFlashcardRequest, v1.DeleteFlashcardResponse]
+	createFlashcard  *connect.Client[v1.CreateFlashcardRequest, v1.CreateFlashcardResponse]
+	getFlashcard     *connect.Client[v1.GetFlashcardRequest, v1.GetFlashcardResponse]
+	listFlashcards   *connect.Client[v1.ListFlashcardsRequest, v1.ListFlashcardsResponse]
+	updateFlashcard  *connect.Client[v1.UpdateFlashcardRequest, v1.UpdateFlashcardResponse]
+	deleteFlashcard  *connect.Client[v1.DeleteFlashcardRequest, v1.DeleteFlashcardResponse]
+	importFlashcards *connect.Client[v1.ImportFlashcardsRequest, v1.ImportFlashcardsResponse]
 }
 
 // CreateFlashcard calls flashcard.v1.FlashcardService.CreateFlashcard.
@@ -513,6 +552,11 @@ func (c *flashcardServiceClient) DeleteFlashcard(ctx context.Context, req *conne
 	return c.deleteFlashcard.CallUnary(ctx, req)
 }
 
+// ImportFlashcards calls flashcard.v1.FlashcardService.ImportFlashcards.
+func (c *flashcardServiceClient) ImportFlashcards(ctx context.Context, req *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error) {
+	return c.importFlashcards.CallUnary(ctx, req)
+}
+
 // FlashcardServiceHandler is an implementation of the flashcard.v1.FlashcardService service.
 type FlashcardServiceHandler interface {
 	CreateFlashcard(context.Context, *connect.Request[v1.CreateFlashcardRequest]) (*connect.Response[v1.CreateFlashcardResponse], error)
@@ -520,6 +564,7 @@ type FlashcardServiceHandler interface {
 	ListFlashcards(context.Context, *connect.Request[v1.ListFlashcardsRequest]) (*connect.Response[v1.ListFlashcardsResponse], error)
 	UpdateFlashcard(context.Context, *connect.Request[v1.UpdateFlashcardRequest]) (*connect.Response[v1.UpdateFlashcardResponse], error)
 	DeleteFlashcard(context.Context, *connect.Request[v1.DeleteFlashcardRequest]) (*connect.Response[v1.DeleteFlashcardResponse], error)
+	ImportFlashcards(context.Context, *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error)
 }
 
 // NewFlashcardServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -559,6 +604,12 @@ func NewFlashcardServiceHandler(svc FlashcardServiceHandler, opts ...connect.Han
 		connect.WithSchema(flashcardServiceMethods.ByName("DeleteFlashcard")),
 		connect.WithHandlerOptions(opts...),
 	)
+	flashcardServiceImportFlashcardsHandler := connect.NewUnaryHandler(
+		FlashcardServiceImportFlashcardsProcedure,
+		svc.ImportFlashcards,
+		connect.WithSchema(flashcardServiceMethods.ByName("ImportFlashcards")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/flashcard.v1.FlashcardService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case FlashcardServiceCreateFlashcardProcedure:
@@ -571,6 +622,8 @@ func NewFlashcardServiceHandler(svc FlashcardServiceHandler, opts ...connect.Han
 			flashcardServiceUpdateFlashcardHandler.ServeHTTP(w, r)
 		case FlashcardServiceDeleteFlashcardProcedure:
 			flashcardServiceDeleteFlashcardHandler.ServeHTTP(w, r)
+		case FlashcardServiceImportFlashcardsProcedure:
+			flashcardServiceImportFlashcardsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -598,4 +651,8 @@ func (UnimplementedFlashcardServiceHandler) UpdateFlashcard(context.Context, *co
 
 func (UnimplementedFlashcardServiceHandler) DeleteFlashcard(context.Context, *connect.Request[v1.DeleteFlashcardRequest]) (*connect.Response[v1.DeleteFlashcardResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.FlashcardService.DeleteFlashcard is not implemented"))
+}
+
+func (UnimplementedFlashcardServiceHandler) ImportFlashcards(context.Context, *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.FlashcardService.ImportFlashcards is not implemented"))
 }

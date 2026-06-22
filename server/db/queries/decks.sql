@@ -37,3 +37,10 @@ RETURNING
 DELETE FROM decks d
 USING folders f
 WHERE d.folder_id = f.id AND d.id = @id AND f.owner_id = @owner_id;
+
+-- name: LockDeckForUpdate :one
+SELECT d.id
+FROM decks d
+JOIN folders f ON f.id = d.folder_id
+WHERE d.id = @id AND f.owner_id = @owner_id
+FOR UPDATE OF d;

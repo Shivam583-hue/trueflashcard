@@ -32,6 +32,11 @@ message Flashcard {
   google.protobuf.Timestamp updated_at = 7;
 }
 
+message CardInput {
+  string front = 1;
+  string back = 2;
+}
+
 message StudyProgress {
   string deck_id = 1;
   int32 total = 2;
@@ -127,12 +132,25 @@ message DeleteDeckRequest {
 
 message DeleteDeckResponse {}
 
+message ImportDeckRequest {
+  string folder_id = 1;
+  string name = 2;
+  string description = 3;
+  repeated CardInput cards = 4;
+}
+
+message ImportDeckResponse {
+  Deck deck = 1;
+  int32 created_count = 2;
+}
+
 service DeckService {
   rpc CreateDeck(CreateDeckRequest) returns (CreateDeckResponse);
   rpc GetDeck(GetDeckRequest) returns (GetDeckResponse);
   rpc ListDecks(ListDecksRequest) returns (ListDecksResponse);
   rpc UpdateDeck(UpdateDeckRequest) returns (UpdateDeckResponse);
   rpc DeleteDeck(DeleteDeckRequest) returns (DeleteDeckResponse);
+  rpc ImportDeck(ImportDeckRequest) returns (ImportDeckResponse);
 }
 
 message CreateFlashcardRequest {
@@ -178,10 +196,20 @@ message DeleteFlashcardRequest {
 
 message DeleteFlashcardResponse {}
 
+message ImportFlashcardsRequest {
+  string deck_id = 1;
+  repeated CardInput cards = 2;
+}
+
+message ImportFlashcardsResponse {
+  repeated Flashcard flashcards = 1;
+}
+
 service FlashcardService {
   rpc CreateFlashcard(CreateFlashcardRequest) returns (CreateFlashcardResponse);
   rpc GetFlashcard(GetFlashcardRequest) returns (GetFlashcardResponse);
   rpc ListFlashcards(ListFlashcardsRequest) returns (ListFlashcardsResponse);
   rpc UpdateFlashcard(UpdateFlashcardRequest) returns (UpdateFlashcardResponse);
   rpc DeleteFlashcard(DeleteFlashcardRequest) returns (DeleteFlashcardResponse);
+  rpc ImportFlashcards(ImportFlashcardsRequest) returns (ImportFlashcardsResponse);
 }

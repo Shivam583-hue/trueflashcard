@@ -36,6 +36,19 @@ func (s *Store) VerifyConnectivity(ctx context.Context) error {
 	return err
 }
 
+func (s *Store) WithTx(ctx context.Context, fn func(q dbgen.Querier) error) error {
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback(ctx)
+
+	if err := fn(s.Queries.WithTx(tx)); err != nil {
+		return err
+	}
+	return tx.Commit(ctx)
+}
+
 func (s *Store) Close() {
 	s.pool.Close()
 }

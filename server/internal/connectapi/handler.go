@@ -15,13 +15,13 @@ import (
 
 const sessionCookieName = "session"
 
-func NewHandler(q dbgen.Querier, sessions *auth.SessionManager, appURL string) http.Handler {
+func NewHandler(q dbgen.Querier, tx service.Transactor, sessions *auth.SessionManager, appURL string) http.Handler {
 	opts := connect.WithInterceptors(authInterceptor(sessions))
 
 	mux := http.NewServeMux()
 	mux.Handle(flashcardv1connect.NewFolderServiceHandler(folderAPI{service.NewFolderService(q)}, opts))
-	mux.Handle(flashcardv1connect.NewDeckServiceHandler(deckAPI{service.NewDeckService(q)}, opts))
-	mux.Handle(flashcardv1connect.NewFlashcardServiceHandler(flashcardAPI{service.NewFlashcardService(q)}, opts))
+	mux.Handle(flashcardv1connect.NewDeckServiceHandler(deckAPI{service.NewDeckService(q, tx)}, opts))
+	mux.Handle(flashcardv1connect.NewFlashcardServiceHandler(flashcardAPI{service.NewFlashcardService(q, tx)}, opts))
 
 	return withCORS(mux, appURL)
 }

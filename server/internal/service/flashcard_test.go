@@ -23,7 +23,7 @@ func TestCreateFlashcardSuccess(t *testing.T) {
 			return dbgen.Flashcard{ID: cardID, DeckID: p.DeckID, Front: p.Front, Back: p.Back, Position: 0}, nil
 		},
 	}
-	resp, err := NewFlashcardService(q).CreateFlashcard(ctx, &flashcardv1.CreateFlashcardRequest{
+	resp, err := NewFlashcardService(q, directTx{q}).CreateFlashcard(ctx, &flashcardv1.CreateFlashcardRequest{
 		DeckId: deckID.String(),
 		Front:  "  Q  ",
 		Back:   "  A  ",
@@ -43,7 +43,7 @@ func TestCreateFlashcardSuccess(t *testing.T) {
 func TestCreateFlashcardMissingBack(t *testing.T) {
 	ctx, _ := authedContext()
 	q := &stubQuerier{}
-	_, err := NewFlashcardService(q).CreateFlashcard(ctx, &flashcardv1.CreateFlashcardRequest{
+	_, err := NewFlashcardService(q, directTx{q}).CreateFlashcard(ctx, &flashcardv1.CreateFlashcardRequest{
 		DeckId: uuid.NewString(),
 		Front:  "Q",
 		Back:   "   ",
@@ -59,7 +59,7 @@ func TestCreateFlashcardDeckNotOwned(t *testing.T) {
 			return dbgen.Flashcard{}, pgx.ErrNoRows
 		},
 	}
-	_, err := NewFlashcardService(q).CreateFlashcard(ctx, &flashcardv1.CreateFlashcardRequest{
+	_, err := NewFlashcardService(q, directTx{q}).CreateFlashcard(ctx, &flashcardv1.CreateFlashcardRequest{
 		DeckId: uuid.NewString(),
 		Front:  "Q",
 		Back:   "A",
@@ -80,7 +80,7 @@ func TestListFlashcardsSuccess(t *testing.T) {
 			}, nil
 		},
 	}
-	resp, err := NewFlashcardService(q).ListFlashcards(ctx, &flashcardv1.ListFlashcardsRequest{DeckId: deckID.String()})
+	resp, err := NewFlashcardService(q, directTx{q}).ListFlashcards(ctx, &flashcardv1.ListFlashcardsRequest{DeckId: deckID.String()})
 	requireNoError(t, err)
 	if captured.DeckID != deckID || captured.OwnerID != userID {
 		t.Fatalf("list not scoped correctly: %+v", captured)
@@ -93,7 +93,7 @@ func TestListFlashcardsSuccess(t *testing.T) {
 func TestUpdateFlashcardNegativePosition(t *testing.T) {
 	ctx, _ := authedContext()
 	q := &stubQuerier{}
-	_, err := NewFlashcardService(q).UpdateFlashcard(ctx, &flashcardv1.UpdateFlashcardRequest{
+	_, err := NewFlashcardService(q, directTx{q}).UpdateFlashcard(ctx, &flashcardv1.UpdateFlashcardRequest{
 		Id:       uuid.NewString(),
 		Front:    "Q",
 		Back:     "A",
@@ -112,7 +112,7 @@ func TestDeleteFlashcardSuccess(t *testing.T) {
 			return 1, nil
 		},
 	}
-	_, err := NewFlashcardService(q).DeleteFlashcard(ctx, &flashcardv1.DeleteFlashcardRequest{Id: uuid.NewString()})
+	_, err := NewFlashcardService(q, directTx{q}).DeleteFlashcard(ctx, &flashcardv1.DeleteFlashcardRequest{Id: uuid.NewString()})
 	requireNoError(t, err)
 	if captured.OwnerID != userID {
 		t.Fatalf("delete not scoped to caller")
@@ -126,6 +126,6 @@ func TestDeleteFlashcardNotFound(t *testing.T) {
 			return 0, nil
 		},
 	}
-	_, err := NewFlashcardService(q).DeleteFlashcard(ctx, &flashcardv1.DeleteFlashcardRequest{Id: uuid.NewString()})
+	_, err := NewFlashcardService(q, directTx{q}).DeleteFlashcard(ctx, &flashcardv1.DeleteFlashcardRequest{Id: uuid.NewString()})
 	requireCode(t, err, codes.NotFound)
 }

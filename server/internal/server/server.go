@@ -19,7 +19,7 @@ type Server struct {
 	listener net.Listener
 }
 
-func New(address string, q dbgen.Querier, sessions *auth.SessionManager) (*Server, error) {
+func New(address string, q dbgen.Querier, tx service.Transactor, sessions *auth.SessionManager) (*Server, error) {
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		return nil, err
@@ -37,8 +37,8 @@ func New(address string, q dbgen.Querier, sessions *auth.SessionManager) (*Serve
 
 	if q != nil {
 		flashcardv1.RegisterFolderServiceServer(grpcServer, service.NewFolderService(q))
-		flashcardv1.RegisterDeckServiceServer(grpcServer, service.NewDeckService(q))
-		flashcardv1.RegisterFlashcardServiceServer(grpcServer, service.NewFlashcardService(q))
+		flashcardv1.RegisterDeckServiceServer(grpcServer, service.NewDeckService(q, tx))
+		flashcardv1.RegisterFlashcardServiceServer(grpcServer, service.NewFlashcardService(q, tx))
 	}
 
 	reflection.Register(grpcServer)

@@ -157,6 +157,26 @@ func (q *Queries) ListDecks(ctx context.Context, arg ListDecksParams) ([]ListDec
 	return items, nil
 }
 
+const lockDeckForUpdate = `-- name: LockDeckForUpdate :one
+SELECT d.id
+FROM decks d
+JOIN folders f ON f.id = d.folder_id
+WHERE d.id = $1 AND f.owner_id = $2
+FOR UPDATE OF d
+`
+
+type LockDeckForUpdateParams struct {
+	ID      uuid.UUID
+	OwnerID uuid.UUID
+}
+
+func (q *Queries) LockDeckForUpdate(ctx context.Context, arg LockDeckForUpdateParams) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, lockDeckForUpdate, arg.ID, arg.OwnerID)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
+
 const updateDeck = `-- name: UpdateDeck :one
 UPDATE decks d
 SET name = $1,

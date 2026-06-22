@@ -53,6 +53,10 @@ func (a deckAPI) DeleteDeck(ctx context.Context, r *connect.Request[v1.DeleteDec
 	return invoke(ctx, r, a.svc.DeleteDeck)
 }
 
+func (a deckAPI) ImportDeck(ctx context.Context, r *connect.Request[v1.ImportDeckRequest]) (*connect.Response[v1.ImportDeckResponse], error) {
+	return invoke(ctx, r, a.svc.ImportDeck)
+}
+
 type flashcardAPI struct{ svc *service.FlashcardService }
 
 func (a flashcardAPI) CreateFlashcard(ctx context.Context, r *connect.Request[v1.CreateFlashcardRequest]) (*connect.Response[v1.CreateFlashcardResponse], error) {
@@ -73,4 +77,8 @@ func (a flashcardAPI) UpdateFlashcard(ctx context.Context, r *connect.Request[v1
 
 func (a flashcardAPI) DeleteFlashcard(ctx context.Context, r *connect.Request[v1.DeleteFlashcardRequest]) (*connect.Response[v1.DeleteFlashcardResponse], error) {
 	return invoke(ctx, r, a.svc.DeleteFlashcard)
+}
+
+func (a flashcardAPI) ImportFlashcards(ctx context.Context, r *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error) {
+	return invoke(ctx, r, a.svc.ImportFlashcards)
 }

@@ -24,7 +24,7 @@ func TestCreateDeckSuccess(t *testing.T) {
 		},
 	}
 
-	resp, err := NewDeckService(q).CreateDeck(ctx, &flashcardv1.CreateDeckRequest{
+	resp, err := NewDeckService(q, directTx{q}).CreateDeck(ctx, &flashcardv1.CreateDeckRequest{
 		FolderId:    folderID.String(),
 		Name:        "Cell Biology",
 		Description: "  intro  ",
@@ -45,7 +45,7 @@ func TestCreateDeckSuccess(t *testing.T) {
 func TestCreateDeckMissingFolderID(t *testing.T) {
 	ctx, _ := authedContext()
 	q := &stubQuerier{}
-	_, err := NewDeckService(q).CreateDeck(ctx, &flashcardv1.CreateDeckRequest{Name: "X"})
+	_, err := NewDeckService(q, directTx{q}).CreateDeck(ctx, &flashcardv1.CreateDeckRequest{Name: "X"})
 	requireCode(t, err, codes.InvalidArgument)
 	requireNoCalls(t, q)
 }
@@ -57,7 +57,7 @@ func TestCreateDeckFolderNotOwned(t *testing.T) {
 			return dbgen.Deck{}, pgx.ErrNoRows
 		},
 	}
-	_, err := NewDeckService(q).CreateDeck(ctx, &flashcardv1.CreateDeckRequest{
+	_, err := NewDeckService(q, directTx{q}).CreateDeck(ctx, &flashcardv1.CreateDeckRequest{
 		FolderId: uuid.NewString(),
 		Name:     "X",
 	})
@@ -72,7 +72,7 @@ func TestGetDeckSuccess(t *testing.T) {
 			return dbgen.GetDeckRow{ID: deckID, FolderID: uuid.New(), Name: "Deck", CardCount: 5}, nil
 		},
 	}
-	resp, err := NewDeckService(q).GetDeck(ctx, &flashcardv1.GetDeckRequest{Id: deckID.String()})
+	resp, err := NewDeckService(q, directTx{q}).GetDeck(ctx, &flashcardv1.GetDeckRequest{Id: deckID.String()})
 	requireNoError(t, err)
 	if resp.GetDeck().GetCardCount() != 5 {
 		t.Fatalf("expected card_count 5, got %d", resp.GetDeck().GetCardCount())
@@ -89,7 +89,7 @@ func TestListDecksSuccess(t *testing.T) {
 			return []dbgen.ListDecksRow{{ID: uuid.New(), FolderID: p.FolderID, Name: "D", CardCount: 2}}, nil
 		},
 	}
-	resp, err := NewDeckService(q).ListDecks(ctx, &flashcardv1.ListDecksRequest{FolderId: folderID.String()})
+	resp, err := NewDeckService(q, directTx{q}).ListDecks(ctx, &flashcardv1.ListDecksRequest{FolderId: folderID.String()})
 	requireNoError(t, err)
 	if captured.FolderID != folderID || captured.OwnerID != userID {
 		t.Fatalf("list not scoped correctly: %+v", captured)
@@ -107,7 +107,7 @@ func TestUpdateDeckSuccess(t *testing.T) {
 			return dbgen.UpdateDeckRow{ID: p.ID, FolderID: uuid.New(), Name: p.Name, CardCount: 3}, nil
 		},
 	}
-	resp, err := NewDeckService(q).UpdateDeck(ctx, &flashcardv1.UpdateDeckRequest{Id: deckID.String(), Name: "New"})
+	resp, err := NewDeckService(q, directTx{q}).UpdateDeck(ctx, &flashcardv1.UpdateDeckRequest{Id: deckID.String(), Name: "New"})
 	requireNoError(t, err)
 	if resp.GetDeck().GetCardCount() != 3 {
 		t.Fatalf("expected card_count 3, got %d", resp.GetDeck().GetCardCount())
@@ -121,6 +121,6 @@ func TestDeleteDeckNotFound(t *testing.T) {
 			return 0, nil
 		},
 	}
-	_, err := NewDeckService(q).DeleteDeck(ctx, &flashcardv1.DeleteDeckRequest{Id: uuid.NewString()})
+	_, err := NewDeckService(q, directTx{q}).DeleteDeck(ctx, &flashcardv1.DeleteDeckRequest{Id: uuid.NewString()})
 	requireCode(t, err, codes.NotFound)
 }

@@ -11,11 +11,12 @@ import (
 
 type DeckService struct {
 	flashcardv1.UnimplementedDeckServiceServer
-	q dbgen.Querier
+	q  dbgen.Querier
+	tx Transactor
 }
 
-func NewDeckService(q dbgen.Querier) *DeckService {
-	return &DeckService{q: q}
+func NewDeckService(q dbgen.Querier, tx Transactor) *DeckService {
+	return &DeckService{q: q, tx: tx}
 }
 
 func (s *DeckService) CreateDeck(ctx context.Context, req *flashcardv1.CreateDeckRequest) (*flashcardv1.CreateDeckResponse, error) {
@@ -135,4 +136,60 @@ func (s *DeckService) DeleteDeck(ctx context.Context, req *flashcardv1.DeleteDec
 		return nil, status.Error(codes.NotFound, "deck not found")
 	}
 	return &flashcardv1.DeleteDeckResponse{}, nil
+}
+
+func (s *DeckService) ImportDeck(ctx context.Context, req *flashcardv1.ImportDeckRequest) (*flashcardv1.ImportDeckResponse, error) {
+	ownerID, err := callerID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	folderID, err := parseID("folder_id", req.GetFolderId())
+	if err != nil {
+		return nil, err
+	}
+	name, err := requireText("name", req.GetName(), maxNameLen)
+	if err != nil {
+		return nil, err
+	}
+	description, err := optionalText("description", req.GetDescription(), maxDescriptionLen)
+	if err != nil {
+		return nil, err
+	}
+	cards, err := validateCardInputs(req.GetCards())
+	if err != nil {
+		return nil, err
+	}
+
+	var deck dbgen.Deck
+	err = s.tx.WithTx(ctx, func(q dbgen.Querier) error {
+		created, err := q.CreateDeck(ctx, dbgen.CreateDeckParams{
+			FolderID:    folderID,
+			OwnerID:     ownerID,
+			Name:        name,
+			Description: description,
+		})
+		if err != nil {
+			return err
+		}
+		for _, c := range cards {
+			if _, err := q.CreateFlashcard(ctx, dbgen.CreateFlashcardParams{
+				DeckID:  created.ID,
+				OwnerID: ownerID,
+				Front:   c.front,
+				Back:    c.back,
+			}); err != nil {
+				return err
+			}
+		}
+		deck = created
+		return nil
+	})
+	if err != nil {
+		return nil, translateError(err)
+	}
+
+	return &flashcardv1.ImportDeckResponse{
+		Deck:         deckToProto(deck, int32(len(cards))),
+		CreatedCount: int32(len(cards)),
+	}, nil
 }

@@ -11,11 +11,12 @@ import (
 
 type FlashcardService struct {
 	flashcardv1.UnimplementedFlashcardServiceServer
-	q dbgen.Querier
+	q  dbgen.Querier
+	tx Transactor
 }
 
-func NewFlashcardService(q dbgen.Querier) *FlashcardService {
-	return &FlashcardService{q: q}
+func NewFlashcardService(q dbgen.Querier, tx Transactor) *FlashcardService {
+	return &FlashcardService{q: q, tx: tx}
 }
 
 func (s *FlashcardService) CreateFlashcard(ctx context.Context, req *flashcardv1.CreateFlashcardRequest) (*flashcardv1.CreateFlashcardResponse, error) {
@@ -139,4 +140,45 @@ func (s *FlashcardService) DeleteFlashcard(ctx context.Context, req *flashcardv1
 		return nil, status.Error(codes.NotFound, "flashcard not found")
 	}
 	return &flashcardv1.DeleteFlashcardResponse{}, nil
+}
+
+func (s *FlashcardService) ImportFlashcards(ctx context.Context, req *flashcardv1.ImportFlashcardsRequest) (*flashcardv1.ImportFlashcardsResponse, error) {
+	ownerID, err := callerID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	deckID, err := parseID("deck_id", req.GetDeckId())
+	if err != nil {
+		return nil, err
+	}
+	cards, err := validateCardInputs(req.GetCards())
+	if err != nil {
+		return nil, err
+	}
+
+	created := make([]*flashcardv1.Flashcard, 0, len(cards))
+	err = s.tx.WithTx(ctx, func(q dbgen.Querier) error {
+		created = created[:0]
+		if _, err := q.LockDeckForUpdate(ctx, dbgen.LockDeckForUpdateParams{ID: deckID, OwnerID: ownerID}); err != nil {
+			return err
+		}
+		for _, c := range cards {
+			card, err := q.CreateFlashcard(ctx, dbgen.CreateFlashcardParams{
+				DeckID:  deckID,
+				OwnerID: ownerID,
+				Front:   c.front,
+				Back:    c.back,
+			})
+			if err != nil {
+				return err
+			}
+			created = append(created, flashcardToProto(card))
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, translateError(err)
+	}
+
+	return &flashcardv1.ImportFlashcardsResponse{Flashcards: created}, nil
 }

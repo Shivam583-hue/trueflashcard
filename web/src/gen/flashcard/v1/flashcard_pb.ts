@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file flashcard/v1/flashcard.proto.
  */
 export const file_flashcard_v1_flashcard: GenFile = /*@__PURE__*/
-  fileDesc("ChxmbGFzaGNhcmQvdjEvZmxhc2hjYXJkLnByb3RvEgxmbGFzaGNhcmQudjEilAEKBkZvbGRlchIKCgJpZBgBIAEoCRIQCghvd25lcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEi4KCmNyZWF0ZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIrwBCgREZWNrEgoKAmlkGAEgASgJEhEKCWZvbGRlcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEhMKC2Rlc2NyaXB0aW9uGAQgASgJEhIKCmNhcmRfY291bnQYBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAitwEKCUZsYXNoY2FyZBIKCgJpZBgBIAEoCRIPCgdkZWNrX2lkGAIgASgJEg0KBWZyb250GAMgASgJEgwKBGJhY2sYBCABKAkSEAoIcG9zaXRpb24YBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAibgoNU3R1ZHlQcm9ncmVzcxIPCgdkZWNrX2lkGAEgASgJEg0KBXRvdGFsGAIgASgFEhAKCHJldmlld2VkGAMgASgFEhEKCXJlbWFpbmluZxgEIAEoBRIYChBjdXJyZW50X3Bvc2l0aW9uGAUgASgFIiMKE0NyZWF0ZUZvbGRlclJlcXVlc3QSDAoEbmFtZRgBIAEoCSI8ChRDcmVhdGVGb2xkZXJSZXNwb25zZRIkCgZmb2xkZXIYASABKAsyFC5mbGFzaGNhcmQudjEuRm9sZGVyIh4KEEdldEZvbGRlclJlcXVlc3QSCgoCaWQYASABKAkiOQoRR2V0Rm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIUChJMaXN0Rm9sZGVyc1JlcXVlc3QiPAoTTGlzdEZvbGRlcnNSZXNwb25zZRIlCgdmb2xkZXJzGAEgAygLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIvChNVcGRhdGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkiPAoUVXBkYXRlRm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIhChNEZWxldGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJIhYKFERlbGV0ZUZvbGRlclJlc3BvbnNlIkkKEUNyZWF0ZURlY2tSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rlc2NyaXB0aW9uGAMgASgJIjYKEkNyZWF0ZURlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2siHAoOR2V0RGVja1JlcXVlc3QSCgoCaWQYASABKAkiMwoPR2V0RGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIlChBMaXN0RGVja3NSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCSI2ChFMaXN0RGVja3NSZXNwb25zZRIhCgVkZWNrcxgBIAMoCzISLmZsYXNoY2FyZC52MS5EZWNrIkIKEVVwZGF0ZURlY2tSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiNgoSVXBkYXRlRGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIfChFEZWxldGVEZWNrUmVxdWVzdBIKCgJpZBgBIAEoCSIUChJEZWxldGVEZWNrUmVzcG9uc2UiRgoWQ3JlYXRlRmxhc2hjYXJkUmVxdWVzdBIPCgdkZWNrX2lkGAEgASgJEg0KBWZyb250GAIgASgJEgwKBGJhY2sYAyABKAkiRQoXQ3JlYXRlRmxhc2hjYXJkUmVzcG9uc2USKgoJZmxhc2hjYXJkGAEgASgLMhcuZmxhc2hjYXJkLnYxLkZsYXNoY2FyZCIhChNHZXRGbGFzaGNhcmRSZXF1ZXN0EgoKAmlkGAEgASgJIkIKFEdldEZsYXNoY2FyZFJlc3BvbnNlEioKCWZsYXNoY2FyZBgBIAEoCzIXLmZsYXNoY2FyZC52MS5GbGFzaGNhcmQiKAoVTGlzdEZsYXNoY2FyZHNSZXF1ZXN0Eg8KB2RlY2tfaWQYASABKAkiRQoWTGlzdEZsYXNoY2FyZHNSZXNwb25zZRIrCgpmbGFzaGNhcmRzGAEgAygLMhcuZmxhc2hjYXJkLnYxLkZsYXNoY2FyZCJTChZVcGRhdGVGbGFzaGNhcmRSZXF1ZXN0EgoKAmlkGAEgASgJEg0KBWZyb250GAIgASgJEgwKBGJhY2sYAyABKAkSEAoIcG9zaXRpb24YBCABKAUiRQoXVXBkYXRlRmxhc2hjYXJkUmVzcG9uc2USKgoJZmxhc2hjYXJkGAEgASgLMhcuZmxhc2hjYXJkLnYxLkZsYXNoY2FyZCIkChZEZWxldGVGbGFzaGNhcmRSZXF1ZXN0EgoKAmlkGAEgASgJIhkKF0RlbGV0ZUZsYXNoY2FyZFJlc3BvbnNlMrYDCg1Gb2xkZXJTZXJ2aWNlElUKDENyZWF0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5DcmVhdGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkNyZWF0ZUZvbGRlclJlc3BvbnNlEkwKCUdldEZvbGRlchIeLmZsYXNoY2FyZC52MS5HZXRGb2xkZXJSZXF1ZXN0Gh8uZmxhc2hjYXJkLnYxLkdldEZvbGRlclJlc3BvbnNlElIKC0xpc3RGb2xkZXJzEiAuZmxhc2hjYXJkLnYxLkxpc3RGb2xkZXJzUmVxdWVzdBohLmZsYXNoY2FyZC52MS5MaXN0Rm9sZGVyc1Jlc3BvbnNlElUKDFVwZGF0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5VcGRhdGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLlVwZGF0ZUZvbGRlclJlc3BvbnNlElUKDERlbGV0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5EZWxldGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkRlbGV0ZUZvbGRlclJlc3BvbnNlMpYDCgtEZWNrU2VydmljZRJPCgpDcmVhdGVEZWNrEh8uZmxhc2hjYXJkLnYxLkNyZWF0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkNyZWF0ZURlY2tSZXNwb25zZRJGCgdHZXREZWNrEhwuZmxhc2hjYXJkLnYxLkdldERlY2tSZXF1ZXN0Gh0uZmxhc2hjYXJkLnYxLkdldERlY2tSZXNwb25zZRJMCglMaXN0RGVja3MSHi5mbGFzaGNhcmQudjEuTGlzdERlY2tzUmVxdWVzdBofLmZsYXNoY2FyZC52MS5MaXN0RGVja3NSZXNwb25zZRJPCgpVcGRhdGVEZWNrEh8uZmxhc2hjYXJkLnYxLlVwZGF0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLlVwZGF0ZURlY2tSZXNwb25zZRJPCgpEZWxldGVEZWNrEh8uZmxhc2hjYXJkLnYxLkRlbGV0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkRlbGV0ZURlY2tSZXNwb25zZTLmAwoQRmxhc2hjYXJkU2VydmljZRJeCg9DcmVhdGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuQ3JlYXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5DcmVhdGVGbGFzaGNhcmRSZXNwb25zZRJVCgxHZXRGbGFzaGNhcmQSIS5mbGFzaGNhcmQudjEuR2V0Rmxhc2hjYXJkUmVxdWVzdBoiLmZsYXNoY2FyZC52MS5HZXRGbGFzaGNhcmRSZXNwb25zZRJbCg5MaXN0Rmxhc2hjYXJkcxIjLmZsYXNoY2FyZC52MS5MaXN0Rmxhc2hjYXJkc1JlcXVlc3QaJC5mbGFzaGNhcmQudjEuTGlzdEZsYXNoY2FyZHNSZXNwb25zZRJeCg9VcGRhdGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuVXBkYXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5VcGRhdGVGbGFzaGNhcmRSZXNwb25zZRJeCg9EZWxldGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuRGVsZXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5EZWxldGVGbGFzaGNhcmRSZXNwb25zZWIGcHJvdG8z", [file_google_protobuf_timestamp]);
+  fileDesc("ChxmbGFzaGNhcmQvdjEvZmxhc2hjYXJkLnByb3RvEgxmbGFzaGNhcmQudjEilAEKBkZvbGRlchIKCgJpZBgBIAEoCRIQCghvd25lcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEi4KCmNyZWF0ZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIrwBCgREZWNrEgoKAmlkGAEgASgJEhEKCWZvbGRlcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEhMKC2Rlc2NyaXB0aW9uGAQgASgJEhIKCmNhcmRfY291bnQYBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAitwEKCUZsYXNoY2FyZBIKCgJpZBgBIAEoCRIPCgdkZWNrX2lkGAIgASgJEg0KBWZyb250GAMgASgJEgwKBGJhY2sYBCABKAkSEAoIcG9zaXRpb24YBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiKAoJQ2FyZElucHV0Eg0KBWZyb250GAEgASgJEgwKBGJhY2sYAiABKAkibgoNU3R1ZHlQcm9ncmVzcxIPCgdkZWNrX2lkGAEgASgJEg0KBXRvdGFsGAIgASgFEhAKCHJldmlld2VkGAMgASgFEhEKCXJlbWFpbmluZxgEIAEoBRIYChBjdXJyZW50X3Bvc2l0aW9uGAUgASgFIiMKE0NyZWF0ZUZvbGRlclJlcXVlc3QSDAoEbmFtZRgBIAEoCSI8ChRDcmVhdGVGb2xkZXJSZXNwb25zZRIkCgZmb2xkZXIYASABKAsyFC5mbGFzaGNhcmQudjEuRm9sZGVyIh4KEEdldEZvbGRlclJlcXVlc3QSCgoCaWQYASABKAkiOQoRR2V0Rm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIUChJMaXN0Rm9sZGVyc1JlcXVlc3QiPAoTTGlzdEZvbGRlcnNSZXNwb25zZRIlCgdmb2xkZXJzGAEgAygLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIvChNVcGRhdGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkiPAoUVXBkYXRlRm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIhChNEZWxldGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJIhYKFERlbGV0ZUZvbGRlclJlc3BvbnNlIkkKEUNyZWF0ZURlY2tSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rlc2NyaXB0aW9uGAMgASgJIjYKEkNyZWF0ZURlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2siHAoOR2V0RGVja1JlcXVlc3QSCgoCaWQYASABKAkiMwoPR2V0RGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIlChBMaXN0RGVja3NSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCSI2ChFMaXN0RGVja3NSZXNwb25zZRIhCgVkZWNrcxgBIAMoCzISLmZsYXNoY2FyZC52MS5EZWNrIkIKEVVwZGF0ZURlY2tSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiNgoSVXBkYXRlRGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIfChFEZWxldGVEZWNrUmVxdWVzdBIKCgJpZBgBIAEoCSIUChJEZWxldGVEZWNrUmVzcG9uc2UicQoRSW1wb3J0RGVja1JlcXVlc3QSEQoJZm9sZGVyX2lkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkSJgoFY2FyZHMYBCADKAsyFy5mbGFzaGNhcmQudjEuQ2FyZElucHV0Ik0KEkltcG9ydERlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2sSFQoNY3JlYXRlZF9jb3VudBgCIAEoBSJGChZDcmVhdGVGbGFzaGNhcmRSZXF1ZXN0Eg8KB2RlY2tfaWQYASABKAkSDQoFZnJvbnQYAiABKAkSDAoEYmFjaxgDIAEoCSJFChdDcmVhdGVGbGFzaGNhcmRSZXNwb25zZRIqCglmbGFzaGNhcmQYASABKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIiEKE0dldEZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkiQgoUR2V0Rmxhc2hjYXJkUmVzcG9uc2USKgoJZmxhc2hjYXJkGAEgASgLMhcuZmxhc2hjYXJkLnYxLkZsYXNoY2FyZCIoChVMaXN0Rmxhc2hjYXJkc1JlcXVlc3QSDwoHZGVja19pZBgBIAEoCSJFChZMaXN0Rmxhc2hjYXJkc1Jlc3BvbnNlEisKCmZsYXNoY2FyZHMYASADKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIlMKFlVwZGF0ZUZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkSDQoFZnJvbnQYAiABKAkSDAoEYmFjaxgDIAEoCRIQCghwb3NpdGlvbhgEIAEoBSJFChdVcGRhdGVGbGFzaGNhcmRSZXNwb25zZRIqCglmbGFzaGNhcmQYASABKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIiQKFkRlbGV0ZUZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkiGQoXRGVsZXRlRmxhc2hjYXJkUmVzcG9uc2UiUgoXSW1wb3J0Rmxhc2hjYXJkc1JlcXVlc3QSDwoHZGVja19pZBgBIAEoCRImCgVjYXJkcxgCIAMoCzIXLmZsYXNoY2FyZC52MS5DYXJkSW5wdXQiRwoYSW1wb3J0Rmxhc2hjYXJkc1Jlc3BvbnNlEisKCmZsYXNoY2FyZHMYASADKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkMrYDCg1Gb2xkZXJTZXJ2aWNlElUKDENyZWF0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5DcmVhdGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkNyZWF0ZUZvbGRlclJlc3BvbnNlEkwKCUdldEZvbGRlchIeLmZsYXNoY2FyZC52MS5HZXRGb2xkZXJSZXF1ZXN0Gh8uZmxhc2hjYXJkLnYxLkdldEZvbGRlclJlc3BvbnNlElIKC0xpc3RGb2xkZXJzEiAuZmxhc2hjYXJkLnYxLkxpc3RGb2xkZXJzUmVxdWVzdBohLmZsYXNoY2FyZC52MS5MaXN0Rm9sZGVyc1Jlc3BvbnNlElUKDFVwZGF0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5VcGRhdGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLlVwZGF0ZUZvbGRlclJlc3BvbnNlElUKDERlbGV0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5EZWxldGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkRlbGV0ZUZvbGRlclJlc3BvbnNlMucDCgtEZWNrU2VydmljZRJPCgpDcmVhdGVEZWNrEh8uZmxhc2hjYXJkLnYxLkNyZWF0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkNyZWF0ZURlY2tSZXNwb25zZRJGCgdHZXREZWNrEhwuZmxhc2hjYXJkLnYxLkdldERlY2tSZXF1ZXN0Gh0uZmxhc2hjYXJkLnYxLkdldERlY2tSZXNwb25zZRJMCglMaXN0RGVja3MSHi5mbGFzaGNhcmQudjEuTGlzdERlY2tzUmVxdWVzdBofLmZsYXNoY2FyZC52MS5MaXN0RGVja3NSZXNwb25zZRJPCgpVcGRhdGVEZWNrEh8uZmxhc2hjYXJkLnYxLlVwZGF0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLlVwZGF0ZURlY2tSZXNwb25zZRJPCgpEZWxldGVEZWNrEh8uZmxhc2hjYXJkLnYxLkRlbGV0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkRlbGV0ZURlY2tSZXNwb25zZRJPCgpJbXBvcnREZWNrEh8uZmxhc2hjYXJkLnYxLkltcG9ydERlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkltcG9ydERlY2tSZXNwb25zZTLJBAoQRmxhc2hjYXJkU2VydmljZRJeCg9DcmVhdGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuQ3JlYXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5DcmVhdGVGbGFzaGNhcmRSZXNwb25zZRJVCgxHZXRGbGFzaGNhcmQSIS5mbGFzaGNhcmQudjEuR2V0Rmxhc2hjYXJkUmVxdWVzdBoiLmZsYXNoY2FyZC52MS5HZXRGbGFzaGNhcmRSZXNwb25zZRJbCg5MaXN0Rmxhc2hjYXJkcxIjLmZsYXNoY2FyZC52MS5MaXN0Rmxhc2hjYXJkc1JlcXVlc3QaJC5mbGFzaGNhcmQudjEuTGlzdEZsYXNoY2FyZHNSZXNwb25zZRJeCg9VcGRhdGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuVXBkYXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5VcGRhdGVGbGFzaGNhcmRSZXNwb25zZRJeCg9EZWxldGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuRGVsZXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5EZWxldGVGbGFzaGNhcmRSZXNwb25zZRJhChBJbXBvcnRGbGFzaGNhcmRzEiUuZmxhc2hjYXJkLnYxLkltcG9ydEZsYXNoY2FyZHNSZXF1ZXN0GiYuZmxhc2hjYXJkLnYxLkltcG9ydEZsYXNoY2FyZHNSZXNwb25zZWIGcHJvdG8z", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message flashcard.v1.Folder
@@ -146,6 +146,28 @@ export const FlashcardSchema: GenMessage<Flashcard> = /*@__PURE__*/
   messageDesc(file_flashcard_v1_flashcard, 2);
 
 /**
+ * @generated from message flashcard.v1.CardInput
+ */
+export type CardInput = Message<"flashcard.v1.CardInput"> & {
+  /**
+   * @generated from field: string front = 1;
+   */
+  front: string;
+
+  /**
+   * @generated from field: string back = 2;
+   */
+  back: string;
+};
+
+/**
+ * Describes the message flashcard.v1.CardInput.
+ * Use `create(CardInputSchema)` to create a new message.
+ */
+export const CardInputSchema: GenMessage<CardInput> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 3);
+
+/**
  * @generated from message flashcard.v1.StudyProgress
  */
 export type StudyProgress = Message<"flashcard.v1.StudyProgress"> & {
@@ -180,7 +202,7 @@ export type StudyProgress = Message<"flashcard.v1.StudyProgress"> & {
  * Use `create(StudyProgressSchema)` to create a new message.
  */
 export const StudyProgressSchema: GenMessage<StudyProgress> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 3);
+  messageDesc(file_flashcard_v1_flashcard, 4);
 
 /**
  * @generated from message flashcard.v1.CreateFolderRequest
@@ -197,7 +219,7 @@ export type CreateFolderRequest = Message<"flashcard.v1.CreateFolderRequest"> & 
  * Use `create(CreateFolderRequestSchema)` to create a new message.
  */
 export const CreateFolderRequestSchema: GenMessage<CreateFolderRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 4);
+  messageDesc(file_flashcard_v1_flashcard, 5);
 
 /**
  * @generated from message flashcard.v1.CreateFolderResponse
@@ -214,7 +236,7 @@ export type CreateFolderResponse = Message<"flashcard.v1.CreateFolderResponse"> 
  * Use `create(CreateFolderResponseSchema)` to create a new message.
  */
 export const CreateFolderResponseSchema: GenMessage<CreateFolderResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 5);
+  messageDesc(file_flashcard_v1_flashcard, 6);
 
 /**
  * @generated from message flashcard.v1.GetFolderRequest
@@ -231,7 +253,7 @@ export type GetFolderRequest = Message<"flashcard.v1.GetFolderRequest"> & {
  * Use `create(GetFolderRequestSchema)` to create a new message.
  */
 export const GetFolderRequestSchema: GenMessage<GetFolderRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 6);
+  messageDesc(file_flashcard_v1_flashcard, 7);
 
 /**
  * @generated from message flashcard.v1.GetFolderResponse
@@ -248,7 +270,7 @@ export type GetFolderResponse = Message<"flashcard.v1.GetFolderResponse"> & {
  * Use `create(GetFolderResponseSchema)` to create a new message.
  */
 export const GetFolderResponseSchema: GenMessage<GetFolderResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 7);
+  messageDesc(file_flashcard_v1_flashcard, 8);
 
 /**
  * @generated from message flashcard.v1.ListFoldersRequest
@@ -261,7 +283,7 @@ export type ListFoldersRequest = Message<"flashcard.v1.ListFoldersRequest"> & {
  * Use `create(ListFoldersRequestSchema)` to create a new message.
  */
 export const ListFoldersRequestSchema: GenMessage<ListFoldersRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 8);
+  messageDesc(file_flashcard_v1_flashcard, 9);
 
 /**
  * @generated from message flashcard.v1.ListFoldersResponse
@@ -278,7 +300,7 @@ export type ListFoldersResponse = Message<"flashcard.v1.ListFoldersResponse"> & 
  * Use `create(ListFoldersResponseSchema)` to create a new message.
  */
 export const ListFoldersResponseSchema: GenMessage<ListFoldersResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 9);
+  messageDesc(file_flashcard_v1_flashcard, 10);
 
 /**
  * @generated from message flashcard.v1.UpdateFolderRequest
@@ -300,7 +322,7 @@ export type UpdateFolderRequest = Message<"flashcard.v1.UpdateFolderRequest"> & 
  * Use `create(UpdateFolderRequestSchema)` to create a new message.
  */
 export const UpdateFolderRequestSchema: GenMessage<UpdateFolderRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 10);
+  messageDesc(file_flashcard_v1_flashcard, 11);
 
 /**
  * @generated from message flashcard.v1.UpdateFolderResponse
@@ -317,7 +339,7 @@ export type UpdateFolderResponse = Message<"flashcard.v1.UpdateFolderResponse"> 
  * Use `create(UpdateFolderResponseSchema)` to create a new message.
  */
 export const UpdateFolderResponseSchema: GenMessage<UpdateFolderResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 11);
+  messageDesc(file_flashcard_v1_flashcard, 12);
 
 /**
  * @generated from message flashcard.v1.DeleteFolderRequest
@@ -334,7 +356,7 @@ export type DeleteFolderRequest = Message<"flashcard.v1.DeleteFolderRequest"> & 
  * Use `create(DeleteFolderRequestSchema)` to create a new message.
  */
 export const DeleteFolderRequestSchema: GenMessage<DeleteFolderRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 12);
+  messageDesc(file_flashcard_v1_flashcard, 13);
 
 /**
  * @generated from message flashcard.v1.DeleteFolderResponse
@@ -347,7 +369,7 @@ export type DeleteFolderResponse = Message<"flashcard.v1.DeleteFolderResponse"> 
  * Use `create(DeleteFolderResponseSchema)` to create a new message.
  */
 export const DeleteFolderResponseSchema: GenMessage<DeleteFolderResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 13);
+  messageDesc(file_flashcard_v1_flashcard, 14);
 
 /**
  * @generated from message flashcard.v1.CreateDeckRequest
@@ -374,7 +396,7 @@ export type CreateDeckRequest = Message<"flashcard.v1.CreateDeckRequest"> & {
  * Use `create(CreateDeckRequestSchema)` to create a new message.
  */
 export const CreateDeckRequestSchema: GenMessage<CreateDeckRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 14);
+  messageDesc(file_flashcard_v1_flashcard, 15);
 
 /**
  * @generated from message flashcard.v1.CreateDeckResponse
@@ -391,7 +413,7 @@ export type CreateDeckResponse = Message<"flashcard.v1.CreateDeckResponse"> & {
  * Use `create(CreateDeckResponseSchema)` to create a new message.
  */
 export const CreateDeckResponseSchema: GenMessage<CreateDeckResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 15);
+  messageDesc(file_flashcard_v1_flashcard, 16);
 
 /**
  * @generated from message flashcard.v1.GetDeckRequest
@@ -408,7 +430,7 @@ export type GetDeckRequest = Message<"flashcard.v1.GetDeckRequest"> & {
  * Use `create(GetDeckRequestSchema)` to create a new message.
  */
 export const GetDeckRequestSchema: GenMessage<GetDeckRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 16);
+  messageDesc(file_flashcard_v1_flashcard, 17);
 
 /**
  * @generated from message flashcard.v1.GetDeckResponse
@@ -425,7 +447,7 @@ export type GetDeckResponse = Message<"flashcard.v1.GetDeckResponse"> & {
  * Use `create(GetDeckResponseSchema)` to create a new message.
  */
 export const GetDeckResponseSchema: GenMessage<GetDeckResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 17);
+  messageDesc(file_flashcard_v1_flashcard, 18);
 
 /**
  * @generated from message flashcard.v1.ListDecksRequest
@@ -442,7 +464,7 @@ export type ListDecksRequest = Message<"flashcard.v1.ListDecksRequest"> & {
  * Use `create(ListDecksRequestSchema)` to create a new message.
  */
 export const ListDecksRequestSchema: GenMessage<ListDecksRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 18);
+  messageDesc(file_flashcard_v1_flashcard, 19);
 
 /**
  * @generated from message flashcard.v1.ListDecksResponse
@@ -459,7 +481,7 @@ export type ListDecksResponse = Message<"flashcard.v1.ListDecksResponse"> & {
  * Use `create(ListDecksResponseSchema)` to create a new message.
  */
 export const ListDecksResponseSchema: GenMessage<ListDecksResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 19);
+  messageDesc(file_flashcard_v1_flashcard, 20);
 
 /**
  * @generated from message flashcard.v1.UpdateDeckRequest
@@ -486,7 +508,7 @@ export type UpdateDeckRequest = Message<"flashcard.v1.UpdateDeckRequest"> & {
  * Use `create(UpdateDeckRequestSchema)` to create a new message.
  */
 export const UpdateDeckRequestSchema: GenMessage<UpdateDeckRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 20);
+  messageDesc(file_flashcard_v1_flashcard, 21);
 
 /**
  * @generated from message flashcard.v1.UpdateDeckResponse
@@ -503,7 +525,7 @@ export type UpdateDeckResponse = Message<"flashcard.v1.UpdateDeckResponse"> & {
  * Use `create(UpdateDeckResponseSchema)` to create a new message.
  */
 export const UpdateDeckResponseSchema: GenMessage<UpdateDeckResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 21);
+  messageDesc(file_flashcard_v1_flashcard, 22);
 
 /**
  * @generated from message flashcard.v1.DeleteDeckRequest
@@ -520,7 +542,7 @@ export type DeleteDeckRequest = Message<"flashcard.v1.DeleteDeckRequest"> & {
  * Use `create(DeleteDeckRequestSchema)` to create a new message.
  */
 export const DeleteDeckRequestSchema: GenMessage<DeleteDeckRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 22);
+  messageDesc(file_flashcard_v1_flashcard, 23);
 
 /**
  * @generated from message flashcard.v1.DeleteDeckResponse
@@ -533,7 +555,61 @@ export type DeleteDeckResponse = Message<"flashcard.v1.DeleteDeckResponse"> & {
  * Use `create(DeleteDeckResponseSchema)` to create a new message.
  */
 export const DeleteDeckResponseSchema: GenMessage<DeleteDeckResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 23);
+  messageDesc(file_flashcard_v1_flashcard, 24);
+
+/**
+ * @generated from message flashcard.v1.ImportDeckRequest
+ */
+export type ImportDeckRequest = Message<"flashcard.v1.ImportDeckRequest"> & {
+  /**
+   * @generated from field: string folder_id = 1;
+   */
+  folderId: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string description = 3;
+   */
+  description: string;
+
+  /**
+   * @generated from field: repeated flashcard.v1.CardInput cards = 4;
+   */
+  cards: CardInput[];
+};
+
+/**
+ * Describes the message flashcard.v1.ImportDeckRequest.
+ * Use `create(ImportDeckRequestSchema)` to create a new message.
+ */
+export const ImportDeckRequestSchema: GenMessage<ImportDeckRequest> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 25);
+
+/**
+ * @generated from message flashcard.v1.ImportDeckResponse
+ */
+export type ImportDeckResponse = Message<"flashcard.v1.ImportDeckResponse"> & {
+  /**
+   * @generated from field: flashcard.v1.Deck deck = 1;
+   */
+  deck?: Deck | undefined;
+
+  /**
+   * @generated from field: int32 created_count = 2;
+   */
+  createdCount: number;
+};
+
+/**
+ * Describes the message flashcard.v1.ImportDeckResponse.
+ * Use `create(ImportDeckResponseSchema)` to create a new message.
+ */
+export const ImportDeckResponseSchema: GenMessage<ImportDeckResponse> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 26);
 
 /**
  * @generated from message flashcard.v1.CreateFlashcardRequest
@@ -560,7 +636,7 @@ export type CreateFlashcardRequest = Message<"flashcard.v1.CreateFlashcardReques
  * Use `create(CreateFlashcardRequestSchema)` to create a new message.
  */
 export const CreateFlashcardRequestSchema: GenMessage<CreateFlashcardRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 24);
+  messageDesc(file_flashcard_v1_flashcard, 27);
 
 /**
  * @generated from message flashcard.v1.CreateFlashcardResponse
@@ -577,7 +653,7 @@ export type CreateFlashcardResponse = Message<"flashcard.v1.CreateFlashcardRespo
  * Use `create(CreateFlashcardResponseSchema)` to create a new message.
  */
 export const CreateFlashcardResponseSchema: GenMessage<CreateFlashcardResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 25);
+  messageDesc(file_flashcard_v1_flashcard, 28);
 
 /**
  * @generated from message flashcard.v1.GetFlashcardRequest
@@ -594,7 +670,7 @@ export type GetFlashcardRequest = Message<"flashcard.v1.GetFlashcardRequest"> & 
  * Use `create(GetFlashcardRequestSchema)` to create a new message.
  */
 export const GetFlashcardRequestSchema: GenMessage<GetFlashcardRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 26);
+  messageDesc(file_flashcard_v1_flashcard, 29);
 
 /**
  * @generated from message flashcard.v1.GetFlashcardResponse
@@ -611,7 +687,7 @@ export type GetFlashcardResponse = Message<"flashcard.v1.GetFlashcardResponse"> 
  * Use `create(GetFlashcardResponseSchema)` to create a new message.
  */
 export const GetFlashcardResponseSchema: GenMessage<GetFlashcardResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 27);
+  messageDesc(file_flashcard_v1_flashcard, 30);
 
 /**
  * @generated from message flashcard.v1.ListFlashcardsRequest
@@ -628,7 +704,7 @@ export type ListFlashcardsRequest = Message<"flashcard.v1.ListFlashcardsRequest"
  * Use `create(ListFlashcardsRequestSchema)` to create a new message.
  */
 export const ListFlashcardsRequestSchema: GenMessage<ListFlashcardsRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 28);
+  messageDesc(file_flashcard_v1_flashcard, 31);
 
 /**
  * @generated from message flashcard.v1.ListFlashcardsResponse
@@ -645,7 +721,7 @@ export type ListFlashcardsResponse = Message<"flashcard.v1.ListFlashcardsRespons
  * Use `create(ListFlashcardsResponseSchema)` to create a new message.
  */
 export const ListFlashcardsResponseSchema: GenMessage<ListFlashcardsResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 29);
+  messageDesc(file_flashcard_v1_flashcard, 32);
 
 /**
  * @generated from message flashcard.v1.UpdateFlashcardRequest
@@ -677,7 +753,7 @@ export type UpdateFlashcardRequest = Message<"flashcard.v1.UpdateFlashcardReques
  * Use `create(UpdateFlashcardRequestSchema)` to create a new message.
  */
 export const UpdateFlashcardRequestSchema: GenMessage<UpdateFlashcardRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 30);
+  messageDesc(file_flashcard_v1_flashcard, 33);
 
 /**
  * @generated from message flashcard.v1.UpdateFlashcardResponse
@@ -694,7 +770,7 @@ export type UpdateFlashcardResponse = Message<"flashcard.v1.UpdateFlashcardRespo
  * Use `create(UpdateFlashcardResponseSchema)` to create a new message.
  */
 export const UpdateFlashcardResponseSchema: GenMessage<UpdateFlashcardResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 31);
+  messageDesc(file_flashcard_v1_flashcard, 34);
 
 /**
  * @generated from message flashcard.v1.DeleteFlashcardRequest
@@ -711,7 +787,7 @@ export type DeleteFlashcardRequest = Message<"flashcard.v1.DeleteFlashcardReques
  * Use `create(DeleteFlashcardRequestSchema)` to create a new message.
  */
 export const DeleteFlashcardRequestSchema: GenMessage<DeleteFlashcardRequest> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 32);
+  messageDesc(file_flashcard_v1_flashcard, 35);
 
 /**
  * @generated from message flashcard.v1.DeleteFlashcardResponse
@@ -724,7 +800,46 @@ export type DeleteFlashcardResponse = Message<"flashcard.v1.DeleteFlashcardRespo
  * Use `create(DeleteFlashcardResponseSchema)` to create a new message.
  */
 export const DeleteFlashcardResponseSchema: GenMessage<DeleteFlashcardResponse> = /*@__PURE__*/
-  messageDesc(file_flashcard_v1_flashcard, 33);
+  messageDesc(file_flashcard_v1_flashcard, 36);
+
+/**
+ * @generated from message flashcard.v1.ImportFlashcardsRequest
+ */
+export type ImportFlashcardsRequest = Message<"flashcard.v1.ImportFlashcardsRequest"> & {
+  /**
+   * @generated from field: string deck_id = 1;
+   */
+  deckId: string;
+
+  /**
+   * @generated from field: repeated flashcard.v1.CardInput cards = 2;
+   */
+  cards: CardInput[];
+};
+
+/**
+ * Describes the message flashcard.v1.ImportFlashcardsRequest.
+ * Use `create(ImportFlashcardsRequestSchema)` to create a new message.
+ */
+export const ImportFlashcardsRequestSchema: GenMessage<ImportFlashcardsRequest> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 37);
+
+/**
+ * @generated from message flashcard.v1.ImportFlashcardsResponse
+ */
+export type ImportFlashcardsResponse = Message<"flashcard.v1.ImportFlashcardsResponse"> & {
+  /**
+   * @generated from field: repeated flashcard.v1.Flashcard flashcards = 1;
+   */
+  flashcards: Flashcard[];
+};
+
+/**
+ * Describes the message flashcard.v1.ImportFlashcardsResponse.
+ * Use `create(ImportFlashcardsResponseSchema)` to create a new message.
+ */
+export const ImportFlashcardsResponseSchema: GenMessage<ImportFlashcardsResponse> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 38);
 
 /**
  * @generated from service flashcard.v1.FolderService
@@ -817,6 +932,14 @@ export const DeckService: GenService<{
     input: typeof DeleteDeckRequestSchema;
     output: typeof DeleteDeckResponseSchema;
   },
+  /**
+   * @generated from rpc flashcard.v1.DeckService.ImportDeck
+   */
+  importDeck: {
+    methodKind: "unary";
+    input: typeof ImportDeckRequestSchema;
+    output: typeof ImportDeckResponseSchema;
+  },
 }> = /*@__PURE__*/
   serviceDesc(file_flashcard_v1_flashcard, 1);
 
@@ -863,6 +986,14 @@ export const FlashcardService: GenService<{
     methodKind: "unary";
     input: typeof DeleteFlashcardRequestSchema;
     output: typeof DeleteFlashcardResponseSchema;
+  },
+  /**
+   * @generated from rpc flashcard.v1.FlashcardService.ImportFlashcards
+   */
+  importFlashcards: {
+    methodKind: "unary";
+    input: typeof ImportFlashcardsRequestSchema;
+    output: typeof ImportFlashcardsResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_flashcard_v1_flashcard, 2);

@@ -16,6 +16,7 @@ import (
 	"github.com/Shivam583-hue/trueflashcard/server/internal/db/dbgen"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/httpauth"
 	"github.com/Shivam583-hue/trueflashcard/server/internal/server"
+	"github.com/Shivam583-hue/trueflashcard/server/internal/service"
 )
 
 func main() {
@@ -25,6 +26,7 @@ func main() {
 	ctx := context.Background()
 
 	var querier dbgen.Querier
+	var tx service.Transactor
 	store, err := db.Connect(ctx)
 	switch {
 	case errors.Is(err, db.ErrMissingDatabaseURL):
@@ -37,11 +39,12 @@ func main() {
 			log.Fatalf("database connectivity check failed: %v", err)
 		}
 		querier = store
+		tx = store
 		log.Println("database connection established")
 	}
 
 	sessions := buildSessionManager()
-	httpServer := buildHTTPServer(httpAddress, querier, sessions)
+	httpServer := buildHTTPServer(httpAddress, querier, tx, sessions)
 	if httpServer != nil {
 		go func() {
 			log.Printf("HTTP server listening on %s (Connect API + auth)", httpAddress)
@@ -51,7 +54,7 @@ func main() {
 		}()
 	}
 
-	srv, err := server.New(grpcAddress, querier, sessions)
+	srv, err := server.New(grpcAddress, querier, tx, sessions)
 	if err != nil {
 		log.Fatalf("failed to create server: %v", err)
 	}
@@ -87,7 +90,7 @@ func buildSessionManager() *auth.SessionManager {
 	return sessions
 }
 
-func buildHTTPServer(address string, querier dbgen.Querier, sessions *auth.SessionManager) *http.Server {
+func buildHTTPServer(address string, querier dbgen.Querier, tx service.Transactor, sessions *auth.SessionManager) *http.Server {
 	if querier == nil || sessions == nil {
 		return nil
 	}
@@ -95,7 +98,7 @@ func buildHTTPServer(address string, querier dbgen.Querier, sessions *auth.Sessi
 	appURL := envOr("APP_URL", "http://localhost:3000")
 	mux := http.NewServeMux()
 
-	mux.Handle("/", connectapi.NewHandler(querier, sessions, appURL))
+	mux.Handle("/", connectapi.NewHandler(querier, tx, sessions, appURL))
 	log.Println("Connect API enabled")
 
 	oauth, err := auth.NewGoogleOAuth()

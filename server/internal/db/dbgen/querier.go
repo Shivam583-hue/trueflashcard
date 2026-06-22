@@ -26,6 +26,7 @@ type Querier interface {
 	ListDecks(ctx context.Context, arg ListDecksParams) ([]ListDecksRow, error)
 	ListFlashcards(ctx context.Context, arg ListFlashcardsParams) ([]Flashcard, error)
 	ListFolders(ctx context.Context, ownerID uuid.UUID) ([]Folder, error)
+	LockDeckForUpdate(ctx context.Context, arg LockDeckForUpdateParams) (uuid.UUID, error)
 	Ping(ctx context.Context) (int32, error)
 	UpdateDeck(ctx context.Context, arg UpdateDeckParams) (UpdateDeckRow, error)
 	UpdateFlashcard(ctx context.Context, arg UpdateFlashcardParams) (Flashcard, error)

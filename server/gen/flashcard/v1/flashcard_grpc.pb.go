@@ -278,6 +278,7 @@ const (
 	DeckService_ListDecks_FullMethodName  = "/flashcard.v1.DeckService/ListDecks"
 	DeckService_UpdateDeck_FullMethodName = "/flashcard.v1.DeckService/UpdateDeck"
 	DeckService_DeleteDeck_FullMethodName = "/flashcard.v1.DeckService/DeleteDeck"
+	DeckService_ImportDeck_FullMethodName = "/flashcard.v1.DeckService/ImportDeck"
 )
 
 // DeckServiceClient is the client API for DeckService service.
@@ -289,6 +290,7 @@ type DeckServiceClient interface {
 	ListDecks(ctx context.Context, in *ListDecksRequest, opts ...grpc.CallOption) (*ListDecksResponse, error)
 	UpdateDeck(ctx context.Context, in *UpdateDeckRequest, opts ...grpc.CallOption) (*UpdateDeckResponse, error)
 	DeleteDeck(ctx context.Context, in *DeleteDeckRequest, opts ...grpc.CallOption) (*DeleteDeckResponse, error)
+	ImportDeck(ctx context.Context, in *ImportDeckRequest, opts ...grpc.CallOption) (*ImportDeckResponse, error)
 }
 
 type deckServiceClient struct {
@@ -349,6 +351,16 @@ func (c *deckServiceClient) DeleteDeck(ctx context.Context, in *DeleteDeckReques
 	return out, nil
 }
 
+func (c *deckServiceClient) ImportDeck(ctx context.Context, in *ImportDeckRequest, opts ...grpc.CallOption) (*ImportDeckResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ImportDeckResponse)
+	err := c.cc.Invoke(ctx, DeckService_ImportDeck_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeckServiceServer is the server API for DeckService service.
 // All implementations must embed UnimplementedDeckServiceServer
 // for forward compatibility.
@@ -358,6 +370,7 @@ type DeckServiceServer interface {
 	ListDecks(context.Context, *ListDecksRequest) (*ListDecksResponse, error)
 	UpdateDeck(context.Context, *UpdateDeckRequest) (*UpdateDeckResponse, error)
 	DeleteDeck(context.Context, *DeleteDeckRequest) (*DeleteDeckResponse, error)
+	ImportDeck(context.Context, *ImportDeckRequest) (*ImportDeckResponse, error)
 	mustEmbedUnimplementedDeckServiceServer()
 }
 
@@ -382,6 +395,9 @@ func (UnimplementedDeckServiceServer) UpdateDeck(context.Context, *UpdateDeckReq
 }
 func (UnimplementedDeckServiceServer) DeleteDeck(context.Context, *DeleteDeckRequest) (*DeleteDeckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDeck not implemented")
+}
+func (UnimplementedDeckServiceServer) ImportDeck(context.Context, *ImportDeckRequest) (*ImportDeckResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportDeck not implemented")
 }
 func (UnimplementedDeckServiceServer) mustEmbedUnimplementedDeckServiceServer() {}
 func (UnimplementedDeckServiceServer) testEmbeddedByValue()                     {}
@@ -494,6 +510,24 @@ func _DeckService_DeleteDeck_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeckService_ImportDeck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportDeckRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeckServiceServer).ImportDeck(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeckService_ImportDeck_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeckServiceServer).ImportDeck(ctx, req.(*ImportDeckRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeckService_ServiceDesc is the grpc.ServiceDesc for DeckService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -521,17 +555,22 @@ var DeckService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteDeck",
 			Handler:    _DeckService_DeleteDeck_Handler,
 		},
+		{
+			MethodName: "ImportDeck",
+			Handler:    _DeckService_ImportDeck_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "flashcard/v1/flashcard.proto",
 }
 
 const (
-	FlashcardService_CreateFlashcard_FullMethodName = "/flashcard.v1.FlashcardService/CreateFlashcard"
-	FlashcardService_GetFlashcard_FullMethodName    = "/flashcard.v1.FlashcardService/GetFlashcard"
-	FlashcardService_ListFlashcards_FullMethodName  = "/flashcard.v1.FlashcardService/ListFlashcards"
-	FlashcardService_UpdateFlashcard_FullMethodName = "/flashcard.v1.FlashcardService/UpdateFlashcard"
-	FlashcardService_DeleteFlashcard_FullMethodName = "/flashcard.v1.FlashcardService/DeleteFlashcard"
+	FlashcardService_CreateFlashcard_FullMethodName  = "/flashcard.v1.FlashcardService/CreateFlashcard"
+	FlashcardService_GetFlashcard_FullMethodName     = "/flashcard.v1.FlashcardService/GetFlashcard"
+	FlashcardService_ListFlashcards_FullMethodName   = "/flashcard.v1.FlashcardService/ListFlashcards"
+	FlashcardService_UpdateFlashcard_FullMethodName  = "/flashcard.v1.FlashcardService/UpdateFlashcard"
+	FlashcardService_DeleteFlashcard_FullMethodName  = "/flashcard.v1.FlashcardService/DeleteFlashcard"
+	FlashcardService_ImportFlashcards_FullMethodName = "/flashcard.v1.FlashcardService/ImportFlashcards"
 )
 
 // FlashcardServiceClient is the client API for FlashcardService service.
@@ -543,6 +582,7 @@ type FlashcardServiceClient interface {
 	ListFlashcards(ctx context.Context, in *ListFlashcardsRequest, opts ...grpc.CallOption) (*ListFlashcardsResponse, error)
 	UpdateFlashcard(ctx context.Context, in *UpdateFlashcardRequest, opts ...grpc.CallOption) (*UpdateFlashcardResponse, error)
 	DeleteFlashcard(ctx context.Context, in *DeleteFlashcardRequest, opts ...grpc.CallOption) (*DeleteFlashcardResponse, error)
+	ImportFlashcards(ctx context.Context, in *ImportFlashcardsRequest, opts ...grpc.CallOption) (*ImportFlashcardsResponse, error)
 }
 
 type flashcardServiceClient struct {
@@ -603,6 +643,16 @@ func (c *flashcardServiceClient) DeleteFlashcard(ctx context.Context, in *Delete
 	return out, nil
 }
 
+func (c *flashcardServiceClient) ImportFlashcards(ctx context.Context, in *ImportFlashcardsRequest, opts ...grpc.CallOption) (*ImportFlashcardsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ImportFlashcardsResponse)
+	err := c.cc.Invoke(ctx, FlashcardService_ImportFlashcards_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FlashcardServiceServer is the server API for FlashcardService service.
 // All implementations must embed UnimplementedFlashcardServiceServer
 // for forward compatibility.
@@ -612,6 +662,7 @@ type FlashcardServiceServer interface {
 	ListFlashcards(context.Context, *ListFlashcardsRequest) (*ListFlashcardsResponse, error)
 	UpdateFlashcard(context.Context, *UpdateFlashcardRequest) (*UpdateFlashcardResponse, error)
 	DeleteFlashcard(context.Context, *DeleteFlashcardRequest) (*DeleteFlashcardResponse, error)
+	ImportFlashcards(context.Context, *ImportFlashcardsRequest) (*ImportFlashcardsResponse, error)
 	mustEmbedUnimplementedFlashcardServiceServer()
 }
 
@@ -636,6 +687,9 @@ func (UnimplementedFlashcardServiceServer) UpdateFlashcard(context.Context, *Upd
 }
 func (UnimplementedFlashcardServiceServer) DeleteFlashcard(context.Context, *DeleteFlashcardRequest) (*DeleteFlashcardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlashcard not implemented")
+}
+func (UnimplementedFlashcardServiceServer) ImportFlashcards(context.Context, *ImportFlashcardsRequest) (*ImportFlashcardsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportFlashcards not implemented")
 }
 func (UnimplementedFlashcardServiceServer) mustEmbedUnimplementedFlashcardServiceServer() {}
 func (UnimplementedFlashcardServiceServer) testEmbeddedByValue()                          {}
@@ -748,6 +802,24 @@ func _FlashcardService_DeleteFlashcard_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FlashcardService_ImportFlashcards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportFlashcardsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FlashcardServiceServer).ImportFlashcards(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FlashcardService_ImportFlashcards_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FlashcardServiceServer).ImportFlashcards(ctx, req.(*ImportFlashcardsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FlashcardService_ServiceDesc is the grpc.ServiceDesc for FlashcardService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -774,6 +846,10 @@ var FlashcardService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteFlashcard",
 			Handler:    _FlashcardService_DeleteFlashcard_Handler,
+		},
+		{
+			MethodName: "ImportFlashcards",
+			Handler:    _FlashcardService_ImportFlashcards_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
