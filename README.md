@@ -5,10 +5,11 @@
 Learn anything, one card at a time — organize folders and decks, study with a flip-card review mode, and bulk-import whole decks from JSON.
 
 
-**[Live demo →](https://ryugacards.vercel.app)**
+**[Live link→](https://ryugacards.vercel.app)**
 
 </div>
-[![Watch the demo](assets/demo-thumbnail.png)](https://github.com/Shivam583-hue/trueflashcard/raw/main/assets/demo-compressed.mp4)
+
+![Flashcards demo](assets/demo-compressed.mp4)
 
 ---
 
