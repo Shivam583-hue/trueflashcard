@@ -8,8 +8,8 @@ Learn anything, one card at a time — organize folders and decks, study with a 
 **[Live demo →](https://ryugacards.vercel.app)**
 
 </div>
+[![Watch the demo](assets/demo-thumbnail.png)](https://github.com/Shivam583-hue/trueflashcard/raw/main/assets/demo-compressed.mp4)
 
-https://github.com/Shivam583-hue/trueflashcard/raw/main/assets/demo-compressed.mp4
 ---
 
 A full-stack flashcard app with a minimalist, dark UI. Next.js frontend, a Go backend speaking gRPC/Connect, Postgres for storage, and Google sign-in.
