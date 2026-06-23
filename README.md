@@ -9,7 +9,7 @@ Learn anything, one card at a time — organize folders and decks, study with a 
 
 </div>
 
-![Flashcards demo](assets/demo-compressed.mp4)
+![demo](assets/demo.gif)
 
 ---
 
