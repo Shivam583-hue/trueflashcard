@@ -9,6 +9,7 @@ import {
 
 const transport = createConnectTransport({
   baseUrl: "/rpc",
+  fetch: (input, init) => fetch(input, { ...init, credentials: "include" }),
 });
 
 export const folderClient = createClient(FolderService, transport);
