@@ -4,12 +4,12 @@
 
 Learn anything, one card at a time — organize folders and decks, study with a flip-card review mode, and bulk-import whole decks from JSON.
 
-https://github.com/Shivam583-hue/trueflashcard/raw/main/assets/demo-compressed.mp4
 
 **[Live demo →](https://ryugacards.vercel.app)**
 
 </div>
 
+https://github.com/Shivam583-hue/trueflashcard/raw/main/assets/demo-compressed.mp4
 ---
 
 A full-stack flashcard app with a minimalist, dark UI. Next.js frontend, a Go backend speaking gRPC/Connect, Postgres for storage, and Google sign-in.
