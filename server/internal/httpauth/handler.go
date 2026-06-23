@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -111,21 +112,13 @@ func (h *Handler) callback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, expiresAt, err := h.sessions.Issue(user.ID)
+	token, _, err := h.sessions.Issue(user.ID)
 	if err != nil {
 		http.Error(w, "internal error", http.StatusInternalServerError)
 		return
 	}
-	http.SetCookie(w, &http.Cookie{
-		Name:     sessionCookieName,
-		Value:    token,
-		Path:     "/",
-		Expires:  expiresAt,
-		HttpOnly: true,
-		Secure:   h.secure,
-		SameSite: h.sameSite,
-	})
-	http.Redirect(w, r, h.appURL+"/home", http.StatusFound)
+	dest := h.appURL + "/api/auth/session?token=" + url.QueryEscape(token)
+	http.Redirect(w, r, dest, http.StatusFound)
 }
 
 func (h *Handler) logout(w http.ResponseWriter, _ *http.Request) {

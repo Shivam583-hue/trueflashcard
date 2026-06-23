@@ -7,11 +7,8 @@ import {
   FolderService,
 } from "@/gen/flashcard/v1/flashcard_pb";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
-
 const transport = createConnectTransport({
-  baseUrl,
-  fetch: (input, init) => fetch(input, { ...init, credentials: "include" }),
+  baseUrl: "/rpc",
 });
 
 export const folderClient = createClient(FolderService, transport);

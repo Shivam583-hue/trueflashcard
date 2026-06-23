@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SignOutIcon } from "@phosphor-icons/react";
 
-import { authBaseUrl } from "@/lib/config";
-
 export function LogoutButton() {
   const router = useRouter();
   const [pending, setPending] = useState(false);
@@ -13,13 +11,8 @@ export function LogoutButton() {
   async function logout() {
     setPending(true);
     try {
-      await fetch(`${authBaseUrl}/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-    } catch {
-      // Ignore network errors; we redirect regardless.
-    }
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch {}
     router.push("/");
   }
 
