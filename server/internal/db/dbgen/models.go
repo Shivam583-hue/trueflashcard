@@ -9,6 +9,33 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type CardReview struct {
+	ID            uuid.UUID
+	CardID        uuid.UUID
+	OwnerID       uuid.UUID
+	Rating        int16
+	StateBefore   int16
+	ElapsedDays   float64
+	Stability     float64
+	Difficulty    float64
+	ScheduledDays float64
+	ReviewedAt    pgtype.Timestamptz
+}
+
+type CardReviewState struct {
+	CardID         uuid.UUID
+	OwnerID        uuid.UUID
+	State          int16
+	DueAt          pgtype.Timestamptz
+	Stability      float64
+	Difficulty     float64
+	Reps           int32
+	Lapses         int32
+	LastReviewedAt pgtype.Timestamptz
+	CreatedAt      pgtype.Timestamptz
+	UpdatedAt      pgtype.Timestamptz
+}
+
 type Deck struct {
 	ID          uuid.UUID
 	FolderID    uuid.UUID

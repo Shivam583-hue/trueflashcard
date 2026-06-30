@@ -8,9 +8,15 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Querier interface {
+	CountDueByDeck(ctx context.Context, arg CountDueByDeckParams) ([]CountDueByDeckRow, error)
+	CountDueTotal(ctx context.Context, arg CountDueTotalParams) (int32, error)
+	CountNewByDeck(ctx context.Context, ownerID uuid.UUID) ([]CountNewByDeckRow, error)
+	CountNewTotal(ctx context.Context, ownerID uuid.UUID) (int32, error)
+	CountReviewsSince(ctx context.Context, arg CountReviewsSinceParams) (int32, error)
 	CreateDeck(ctx context.Context, arg CreateDeckParams) (Deck, error)
 	CreateFlashcard(ctx context.Context, arg CreateFlashcardParams) (Flashcard, error)
 	CreateFolder(ctx context.Context, arg CreateFolderParams) (Folder, error)
@@ -18,20 +24,28 @@ type Querier interface {
 	DeleteDeck(ctx context.Context, arg DeleteDeckParams) (int64, error)
 	DeleteFlashcard(ctx context.Context, arg DeleteFlashcardParams) (int64, error)
 	DeleteFolder(ctx context.Context, arg DeleteFolderParams) (int64, error)
+	GetCardReviewState(ctx context.Context, arg GetCardReviewStateParams) (CardReviewState, error)
 	GetDeck(ctx context.Context, arg GetDeckParams) (GetDeckRow, error)
 	GetFlashcard(ctx context.Context, arg GetFlashcardParams) (Flashcard, error)
 	GetFolder(ctx context.Context, arg GetFolderParams) (Folder, error)
 	GetUserByGoogleSubject(ctx context.Context, googleSubject string) (User, error)
 	GetUserByID(ctx context.Context, id uuid.UUID) (User, error)
+	InsertCardReview(ctx context.Context, arg InsertCardReviewParams) error
 	ListDecks(ctx context.Context, arg ListDecksParams) ([]ListDecksRow, error)
+	ListDueCards(ctx context.Context, arg ListDueCardsParams) ([]Flashcard, error)
+	ListDueCardsInDeck(ctx context.Context, arg ListDueCardsInDeckParams) ([]Flashcard, error)
 	ListFlashcards(ctx context.Context, arg ListFlashcardsParams) ([]Flashcard, error)
 	ListFolders(ctx context.Context, ownerID uuid.UUID) ([]Folder, error)
+	ListNewCards(ctx context.Context, arg ListNewCardsParams) ([]Flashcard, error)
+	ListNewCardsInDeck(ctx context.Context, arg ListNewCardsInDeckParams) ([]Flashcard, error)
+	ListReviewDays(ctx context.Context, ownerID uuid.UUID) ([]pgtype.Date, error)
 	LockDeckForUpdate(ctx context.Context, arg LockDeckForUpdateParams) (uuid.UUID, error)
 	Ping(ctx context.Context) (int32, error)
 	UpdateDeck(ctx context.Context, arg UpdateDeckParams) (UpdateDeckRow, error)
 	UpdateFlashcard(ctx context.Context, arg UpdateFlashcardParams) (Flashcard, error)
 	UpdateFolder(ctx context.Context, arg UpdateFolderParams) (Folder, error)
 	UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) (User, error)
+	UpsertCardReviewState(ctx context.Context, arg UpsertCardReviewStateParams) (CardReviewState, error)
 	UpsertUserByGoogleSubject(ctx context.Context, arg UpsertUserByGoogleSubjectParams) (User, error)
 }
 
