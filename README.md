@@ -51,7 +51,7 @@ by sqlc (parameterized - no string interpolation) and every request is validated
 
 ### Prerequisites
 
-- **Go** 1.24+
+- **Go** 1.26+
 - **Node** 20+ and **pnpm**
 - A **Postgres** database (a free [Neon](https://neon.tech) project works great)
 - Optional, only for regen/migrations: [`buf`](https://buf.build), [`sqlc`](https://sqlc.dev), [`golang-migrate`](https://github.com/golang-migrate/migrate)
