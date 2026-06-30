@@ -1,6 +1,8 @@
 package service
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -14,6 +16,20 @@ func toTimestamp(ts pgtype.Timestamptz) *timestamppb.Timestamp {
 		return nil
 	}
 	return timestamppb.New(ts.Time)
+}
+
+func toPgTimestamp(t time.Time) pgtype.Timestamptz {
+	if t.IsZero() {
+		return pgtype.Timestamptz{}
+	}
+	return pgtype.Timestamptz{Time: t, Valid: true}
+}
+
+func fromPgTimestamp(ts pgtype.Timestamptz) time.Time {
+	if !ts.Valid {
+		return time.Time{}
+	}
+	return ts.Time
 }
 
 func folderToProto(f dbgen.Folder) *flashcardv1.Folder {

@@ -27,6 +27,8 @@ const (
 	DeckServiceName = "flashcard.v1.DeckService"
 	// FlashcardServiceName is the fully-qualified name of the FlashcardService service.
 	FlashcardServiceName = "flashcard.v1.FlashcardService"
+	// StudyServiceName is the fully-qualified name of the StudyService service.
+	StudyServiceName = "flashcard.v1.StudyService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -81,6 +83,15 @@ const (
 	// FlashcardServiceImportFlashcardsProcedure is the fully-qualified name of the FlashcardService's
 	// ImportFlashcards RPC.
 	FlashcardServiceImportFlashcardsProcedure = "/flashcard.v1.FlashcardService/ImportFlashcards"
+	// StudyServiceGetDueCardsProcedure is the fully-qualified name of the StudyService's GetDueCards
+	// RPC.
+	StudyServiceGetDueCardsProcedure = "/flashcard.v1.StudyService/GetDueCards"
+	// StudyServiceSubmitReviewProcedure is the fully-qualified name of the StudyService's SubmitReview
+	// RPC.
+	StudyServiceSubmitReviewProcedure = "/flashcard.v1.StudyService/SubmitReview"
+	// StudyServiceGetStudyOverviewProcedure is the fully-qualified name of the StudyService's
+	// GetStudyOverview RPC.
+	StudyServiceGetStudyOverviewProcedure = "/flashcard.v1.StudyService/GetStudyOverview"
 )
 
 // FolderServiceClient is a client for the flashcard.v1.FolderService service.
@@ -655,4 +666,126 @@ func (UnimplementedFlashcardServiceHandler) DeleteFlashcard(context.Context, *co
 
 func (UnimplementedFlashcardServiceHandler) ImportFlashcards(context.Context, *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.FlashcardService.ImportFlashcards is not implemented"))
+}
+
+// StudyServiceClient is a client for the flashcard.v1.StudyService service.
+type StudyServiceClient interface {
+	GetDueCards(context.Context, *connect.Request[v1.GetDueCardsRequest]) (*connect.Response[v1.GetDueCardsResponse], error)
+	SubmitReview(context.Context, *connect.Request[v1.SubmitReviewRequest]) (*connect.Response[v1.SubmitReviewResponse], error)
+	GetStudyOverview(context.Context, *connect.Request[v1.GetStudyOverviewRequest]) (*connect.Response[v1.GetStudyOverviewResponse], error)
+}
+
+// NewStudyServiceClient constructs a client for the flashcard.v1.StudyService service. By default,
+// it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and
+// sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC()
+// or connect.WithGRPCWeb() options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewStudyServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) StudyServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	studyServiceMethods := v1.File_flashcard_v1_flashcard_proto.Services().ByName("StudyService").Methods()
+	return &studyServiceClient{
+		getDueCards: connect.NewClient[v1.GetDueCardsRequest, v1.GetDueCardsResponse](
+			httpClient,
+			baseURL+StudyServiceGetDueCardsProcedure,
+			connect.WithSchema(studyServiceMethods.ByName("GetDueCards")),
+			connect.WithClientOptions(opts...),
+		),
+		submitReview: connect.NewClient[v1.SubmitReviewRequest, v1.SubmitReviewResponse](
+			httpClient,
+			baseURL+StudyServiceSubmitReviewProcedure,
+			connect.WithSchema(studyServiceMethods.ByName("SubmitReview")),
+			connect.WithClientOptions(opts...),
+		),
+		getStudyOverview: connect.NewClient[v1.GetStudyOverviewRequest, v1.GetStudyOverviewResponse](
+			httpClient,
+			baseURL+StudyServiceGetStudyOverviewProcedure,
+			connect.WithSchema(studyServiceMethods.ByName("GetStudyOverview")),
+			connect.WithClientOptions(opts...),
+		),
+	}
+}
+
+// studyServiceClient implements StudyServiceClient.
+type studyServiceClient struct {
+	getDueCards      *connect.Client[v1.GetDueCardsRequest, v1.GetDueCardsResponse]
+	submitReview     *connect.Client[v1.SubmitReviewRequest, v1.SubmitReviewResponse]
+	getStudyOverview *connect.Client[v1.GetStudyOverviewRequest, v1.GetStudyOverviewResponse]
+}
+
+// GetDueCards calls flashcard.v1.StudyService.GetDueCards.
+func (c *studyServiceClient) GetDueCards(ctx context.Context, req *connect.Request[v1.GetDueCardsRequest]) (*connect.Response[v1.GetDueCardsResponse], error) {
+	return c.getDueCards.CallUnary(ctx, req)
+}
+
+// SubmitReview calls flashcard.v1.StudyService.SubmitReview.
+func (c *studyServiceClient) SubmitReview(ctx context.Context, req *connect.Request[v1.SubmitReviewRequest]) (*connect.Response[v1.SubmitReviewResponse], error) {
+	return c.submitReview.CallUnary(ctx, req)
+}
+
+// GetStudyOverview calls flashcard.v1.StudyService.GetStudyOverview.
+func (c *studyServiceClient) GetStudyOverview(ctx context.Context, req *connect.Request[v1.GetStudyOverviewRequest]) (*connect.Response[v1.GetStudyOverviewResponse], error) {
+	return c.getStudyOverview.CallUnary(ctx, req)
+}
+
+// StudyServiceHandler is an implementation of the flashcard.v1.StudyService service.
+type StudyServiceHandler interface {
+	GetDueCards(context.Context, *connect.Request[v1.GetDueCardsRequest]) (*connect.Response[v1.GetDueCardsResponse], error)
+	SubmitReview(context.Context, *connect.Request[v1.SubmitReviewRequest]) (*connect.Response[v1.SubmitReviewResponse], error)
+	GetStudyOverview(context.Context, *connect.Request[v1.GetStudyOverviewRequest]) (*connect.Response[v1.GetStudyOverviewResponse], error)
+}
+
+// NewStudyServiceHandler builds an HTTP handler from the service implementation. It returns the
+// path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewStudyServiceHandler(svc StudyServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	studyServiceMethods := v1.File_flashcard_v1_flashcard_proto.Services().ByName("StudyService").Methods()
+	studyServiceGetDueCardsHandler := connect.NewUnaryHandler(
+		StudyServiceGetDueCardsProcedure,
+		svc.GetDueCards,
+		connect.WithSchema(studyServiceMethods.ByName("GetDueCards")),
+		connect.WithHandlerOptions(opts...),
+	)
+	studyServiceSubmitReviewHandler := connect.NewUnaryHandler(
+		StudyServiceSubmitReviewProcedure,
+		svc.SubmitReview,
+		connect.WithSchema(studyServiceMethods.ByName("SubmitReview")),
+		connect.WithHandlerOptions(opts...),
+	)
+	studyServiceGetStudyOverviewHandler := connect.NewUnaryHandler(
+		StudyServiceGetStudyOverviewProcedure,
+		svc.GetStudyOverview,
+		connect.WithSchema(studyServiceMethods.ByName("GetStudyOverview")),
+		connect.WithHandlerOptions(opts...),
+	)
+	return "/flashcard.v1.StudyService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case StudyServiceGetDueCardsProcedure:
+			studyServiceGetDueCardsHandler.ServeHTTP(w, r)
+		case StudyServiceSubmitReviewProcedure:
+			studyServiceSubmitReviewHandler.ServeHTTP(w, r)
+		case StudyServiceGetStudyOverviewProcedure:
+			studyServiceGetStudyOverviewHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+}
+
+// UnimplementedStudyServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedStudyServiceHandler struct{}
+
+func (UnimplementedStudyServiceHandler) GetDueCards(context.Context, *connect.Request[v1.GetDueCardsRequest]) (*connect.Response[v1.GetDueCardsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.StudyService.GetDueCards is not implemented"))
+}
+
+func (UnimplementedStudyServiceHandler) SubmitReview(context.Context, *connect.Request[v1.SubmitReviewRequest]) (*connect.Response[v1.SubmitReviewResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.StudyService.SubmitReview is not implemented"))
+}
+
+func (UnimplementedStudyServiceHandler) GetStudyOverview(context.Context, *connect.Request[v1.GetStudyOverviewRequest]) (*connect.Response[v1.GetStudyOverviewResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("flashcard.v1.StudyService.GetStudyOverview is not implemented"))
 }

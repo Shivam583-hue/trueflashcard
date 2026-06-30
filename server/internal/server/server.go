@@ -39,6 +39,7 @@ func New(address string, q dbgen.Querier, tx service.Transactor, sessions *auth.
 		flashcardv1.RegisterFolderServiceServer(grpcServer, service.NewFolderService(q))
 		flashcardv1.RegisterDeckServiceServer(grpcServer, service.NewDeckService(q, tx))
 		flashcardv1.RegisterFlashcardServiceServer(grpcServer, service.NewFlashcardService(q, tx))
+		flashcardv1.RegisterStudyServiceServer(grpcServer, service.NewStudyService(q, tx))
 	}
 
 	reflection.Register(grpcServer)

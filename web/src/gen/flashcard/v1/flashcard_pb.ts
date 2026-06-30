@@ -2,8 +2,8 @@
 // @generated from file flashcard/v1/flashcard.proto (package flashcard.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
 import type { Message } from "@bufbuild/protobuf";
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file flashcard/v1/flashcard.proto.
  */
 export const file_flashcard_v1_flashcard: GenFile = /*@__PURE__*/
-  fileDesc("ChxmbGFzaGNhcmQvdjEvZmxhc2hjYXJkLnByb3RvEgxmbGFzaGNhcmQudjEilAEKBkZvbGRlchIKCgJpZBgBIAEoCRIQCghvd25lcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEi4KCmNyZWF0ZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIrwBCgREZWNrEgoKAmlkGAEgASgJEhEKCWZvbGRlcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEhMKC2Rlc2NyaXB0aW9uGAQgASgJEhIKCmNhcmRfY291bnQYBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAitwEKCUZsYXNoY2FyZBIKCgJpZBgBIAEoCRIPCgdkZWNrX2lkGAIgASgJEg0KBWZyb250GAMgASgJEgwKBGJhY2sYBCABKAkSEAoIcG9zaXRpb24YBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiKAoJQ2FyZElucHV0Eg0KBWZyb250GAEgASgJEgwKBGJhY2sYAiABKAkibgoNU3R1ZHlQcm9ncmVzcxIPCgdkZWNrX2lkGAEgASgJEg0KBXRvdGFsGAIgASgFEhAKCHJldmlld2VkGAMgASgFEhEKCXJlbWFpbmluZxgEIAEoBRIYChBjdXJyZW50X3Bvc2l0aW9uGAUgASgFIiMKE0NyZWF0ZUZvbGRlclJlcXVlc3QSDAoEbmFtZRgBIAEoCSI8ChRDcmVhdGVGb2xkZXJSZXNwb25zZRIkCgZmb2xkZXIYASABKAsyFC5mbGFzaGNhcmQudjEuRm9sZGVyIh4KEEdldEZvbGRlclJlcXVlc3QSCgoCaWQYASABKAkiOQoRR2V0Rm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIUChJMaXN0Rm9sZGVyc1JlcXVlc3QiPAoTTGlzdEZvbGRlcnNSZXNwb25zZRIlCgdmb2xkZXJzGAEgAygLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIvChNVcGRhdGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkiPAoUVXBkYXRlRm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIhChNEZWxldGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJIhYKFERlbGV0ZUZvbGRlclJlc3BvbnNlIkkKEUNyZWF0ZURlY2tSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rlc2NyaXB0aW9uGAMgASgJIjYKEkNyZWF0ZURlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2siHAoOR2V0RGVja1JlcXVlc3QSCgoCaWQYASABKAkiMwoPR2V0RGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIlChBMaXN0RGVja3NSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCSI2ChFMaXN0RGVja3NSZXNwb25zZRIhCgVkZWNrcxgBIAMoCzISLmZsYXNoY2FyZC52MS5EZWNrIkIKEVVwZGF0ZURlY2tSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiNgoSVXBkYXRlRGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIfChFEZWxldGVEZWNrUmVxdWVzdBIKCgJpZBgBIAEoCSIUChJEZWxldGVEZWNrUmVzcG9uc2UicQoRSW1wb3J0RGVja1JlcXVlc3QSEQoJZm9sZGVyX2lkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkSJgoFY2FyZHMYBCADKAsyFy5mbGFzaGNhcmQudjEuQ2FyZElucHV0Ik0KEkltcG9ydERlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2sSFQoNY3JlYXRlZF9jb3VudBgCIAEoBSJGChZDcmVhdGVGbGFzaGNhcmRSZXF1ZXN0Eg8KB2RlY2tfaWQYASABKAkSDQoFZnJvbnQYAiABKAkSDAoEYmFjaxgDIAEoCSJFChdDcmVhdGVGbGFzaGNhcmRSZXNwb25zZRIqCglmbGFzaGNhcmQYASABKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIiEKE0dldEZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkiQgoUR2V0Rmxhc2hjYXJkUmVzcG9uc2USKgoJZmxhc2hjYXJkGAEgASgLMhcuZmxhc2hjYXJkLnYxLkZsYXNoY2FyZCIoChVMaXN0Rmxhc2hjYXJkc1JlcXVlc3QSDwoHZGVja19pZBgBIAEoCSJFChZMaXN0Rmxhc2hjYXJkc1Jlc3BvbnNlEisKCmZsYXNoY2FyZHMYASADKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIlMKFlVwZGF0ZUZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkSDQoFZnJvbnQYAiABKAkSDAoEYmFjaxgDIAEoCRIQCghwb3NpdGlvbhgEIAEoBSJFChdVcGRhdGVGbGFzaGNhcmRSZXNwb25zZRIqCglmbGFzaGNhcmQYASABKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIiQKFkRlbGV0ZUZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkiGQoXRGVsZXRlRmxhc2hjYXJkUmVzcG9uc2UiUgoXSW1wb3J0Rmxhc2hjYXJkc1JlcXVlc3QSDwoHZGVja19pZBgBIAEoCRImCgVjYXJkcxgCIAMoCzIXLmZsYXNoY2FyZC52MS5DYXJkSW5wdXQiRwoYSW1wb3J0Rmxhc2hjYXJkc1Jlc3BvbnNlEisKCmZsYXNoY2FyZHMYASADKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkMrYDCg1Gb2xkZXJTZXJ2aWNlElUKDENyZWF0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5DcmVhdGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkNyZWF0ZUZvbGRlclJlc3BvbnNlEkwKCUdldEZvbGRlchIeLmZsYXNoY2FyZC52MS5HZXRGb2xkZXJSZXF1ZXN0Gh8uZmxhc2hjYXJkLnYxLkdldEZvbGRlclJlc3BvbnNlElIKC0xpc3RGb2xkZXJzEiAuZmxhc2hjYXJkLnYxLkxpc3RGb2xkZXJzUmVxdWVzdBohLmZsYXNoY2FyZC52MS5MaXN0Rm9sZGVyc1Jlc3BvbnNlElUKDFVwZGF0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5VcGRhdGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLlVwZGF0ZUZvbGRlclJlc3BvbnNlElUKDERlbGV0ZUZvbGRlchIhLmZsYXNoY2FyZC52MS5EZWxldGVGb2xkZXJSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkRlbGV0ZUZvbGRlclJlc3BvbnNlMucDCgtEZWNrU2VydmljZRJPCgpDcmVhdGVEZWNrEh8uZmxhc2hjYXJkLnYxLkNyZWF0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkNyZWF0ZURlY2tSZXNwb25zZRJGCgdHZXREZWNrEhwuZmxhc2hjYXJkLnYxLkdldERlY2tSZXF1ZXN0Gh0uZmxhc2hjYXJkLnYxLkdldERlY2tSZXNwb25zZRJMCglMaXN0RGVja3MSHi5mbGFzaGNhcmQudjEuTGlzdERlY2tzUmVxdWVzdBofLmZsYXNoY2FyZC52MS5MaXN0RGVja3NSZXNwb25zZRJPCgpVcGRhdGVEZWNrEh8uZmxhc2hjYXJkLnYxLlVwZGF0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLlVwZGF0ZURlY2tSZXNwb25zZRJPCgpEZWxldGVEZWNrEh8uZmxhc2hjYXJkLnYxLkRlbGV0ZURlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkRlbGV0ZURlY2tSZXNwb25zZRJPCgpJbXBvcnREZWNrEh8uZmxhc2hjYXJkLnYxLkltcG9ydERlY2tSZXF1ZXN0GiAuZmxhc2hjYXJkLnYxLkltcG9ydERlY2tSZXNwb25zZTLJBAoQRmxhc2hjYXJkU2VydmljZRJeCg9DcmVhdGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuQ3JlYXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5DcmVhdGVGbGFzaGNhcmRSZXNwb25zZRJVCgxHZXRGbGFzaGNhcmQSIS5mbGFzaGNhcmQudjEuR2V0Rmxhc2hjYXJkUmVxdWVzdBoiLmZsYXNoY2FyZC52MS5HZXRGbGFzaGNhcmRSZXNwb25zZRJbCg5MaXN0Rmxhc2hjYXJkcxIjLmZsYXNoY2FyZC52MS5MaXN0Rmxhc2hjYXJkc1JlcXVlc3QaJC5mbGFzaGNhcmQudjEuTGlzdEZsYXNoY2FyZHNSZXNwb25zZRJeCg9VcGRhdGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuVXBkYXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5VcGRhdGVGbGFzaGNhcmRSZXNwb25zZRJeCg9EZWxldGVGbGFzaGNhcmQSJC5mbGFzaGNhcmQudjEuRGVsZXRlRmxhc2hjYXJkUmVxdWVzdBolLmZsYXNoY2FyZC52MS5EZWxldGVGbGFzaGNhcmRSZXNwb25zZRJhChBJbXBvcnRGbGFzaGNhcmRzEiUuZmxhc2hjYXJkLnYxLkltcG9ydEZsYXNoY2FyZHNSZXF1ZXN0GiYuZmxhc2hjYXJkLnYxLkltcG9ydEZsYXNoY2FyZHNSZXNwb25zZWIGcHJvdG8z", [file_google_protobuf_timestamp]);
+  fileDesc("ChxmbGFzaGNhcmQvdjEvZmxhc2hjYXJkLnByb3RvEgxmbGFzaGNhcmQudjEilAEKBkZvbGRlchIKCgJpZBgBIAEoCRIQCghvd25lcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEi4KCmNyZWF0ZWRfYXQYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIrwBCgREZWNrEgoKAmlkGAEgASgJEhEKCWZvbGRlcl9pZBgCIAEoCRIMCgRuYW1lGAMgASgJEhMKC2Rlc2NyaXB0aW9uGAQgASgJEhIKCmNhcmRfY291bnQYBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAitwEKCUZsYXNoY2FyZBIKCgJpZBgBIAEoCRIPCgdkZWNrX2lkGAIgASgJEg0KBWZyb250GAMgASgJEgwKBGJhY2sYBCABKAkSEAoIcG9zaXRpb24YBSABKAUSLgoKY3JlYXRlZF9hdBgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiKAoJQ2FyZElucHV0Eg0KBWZyb250GAEgASgJEgwKBGJhY2sYAiABKAkibgoNU3R1ZHlQcm9ncmVzcxIPCgdkZWNrX2lkGAEgASgJEg0KBXRvdGFsGAIgASgFEhAKCHJldmlld2VkGAMgASgFEhEKCXJlbWFpbmluZxgEIAEoBRIYChBjdXJyZW50X3Bvc2l0aW9uGAUgASgFIiMKE0NyZWF0ZUZvbGRlclJlcXVlc3QSDAoEbmFtZRgBIAEoCSI8ChRDcmVhdGVGb2xkZXJSZXNwb25zZRIkCgZmb2xkZXIYASABKAsyFC5mbGFzaGNhcmQudjEuRm9sZGVyIh4KEEdldEZvbGRlclJlcXVlc3QSCgoCaWQYASABKAkiOQoRR2V0Rm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIUChJMaXN0Rm9sZGVyc1JlcXVlc3QiPAoTTGlzdEZvbGRlcnNSZXNwb25zZRIlCgdmb2xkZXJzGAEgAygLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIvChNVcGRhdGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkiPAoUVXBkYXRlRm9sZGVyUmVzcG9uc2USJAoGZm9sZGVyGAEgASgLMhQuZmxhc2hjYXJkLnYxLkZvbGRlciIhChNEZWxldGVGb2xkZXJSZXF1ZXN0EgoKAmlkGAEgASgJIhYKFERlbGV0ZUZvbGRlclJlc3BvbnNlIkkKEUNyZWF0ZURlY2tSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCRIMCgRuYW1lGAIgASgJEhMKC2Rlc2NyaXB0aW9uGAMgASgJIjYKEkNyZWF0ZURlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2siHAoOR2V0RGVja1JlcXVlc3QSCgoCaWQYASABKAkiMwoPR2V0RGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIlChBMaXN0RGVja3NSZXF1ZXN0EhEKCWZvbGRlcl9pZBgBIAEoCSI2ChFMaXN0RGVja3NSZXNwb25zZRIhCgVkZWNrcxgBIAMoCzISLmZsYXNoY2FyZC52MS5EZWNrIkIKEVVwZGF0ZURlY2tSZXF1ZXN0EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkiNgoSVXBkYXRlRGVja1Jlc3BvbnNlEiAKBGRlY2sYASABKAsyEi5mbGFzaGNhcmQudjEuRGVjayIfChFEZWxldGVEZWNrUmVxdWVzdBIKCgJpZBgBIAEoCSIUChJEZWxldGVEZWNrUmVzcG9uc2UicQoRSW1wb3J0RGVja1JlcXVlc3QSEQoJZm9sZGVyX2lkGAEgASgJEgwKBG5hbWUYAiABKAkSEwoLZGVzY3JpcHRpb24YAyABKAkSJgoFY2FyZHMYBCADKAsyFy5mbGFzaGNhcmQudjEuQ2FyZElucHV0Ik0KEkltcG9ydERlY2tSZXNwb25zZRIgCgRkZWNrGAEgASgLMhIuZmxhc2hjYXJkLnYxLkRlY2sSFQoNY3JlYXRlZF9jb3VudBgCIAEoBSJGChZDcmVhdGVGbGFzaGNhcmRSZXF1ZXN0Eg8KB2RlY2tfaWQYASABKAkSDQoFZnJvbnQYAiABKAkSDAoEYmFjaxgDIAEoCSJFChdDcmVhdGVGbGFzaGNhcmRSZXNwb25zZRIqCglmbGFzaGNhcmQYASABKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIiEKE0dldEZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkiQgoUR2V0Rmxhc2hjYXJkUmVzcG9uc2USKgoJZmxhc2hjYXJkGAEgASgLMhcuZmxhc2hjYXJkLnYxLkZsYXNoY2FyZCIoChVMaXN0Rmxhc2hjYXJkc1JlcXVlc3QSDwoHZGVja19pZBgBIAEoCSJFChZMaXN0Rmxhc2hjYXJkc1Jlc3BvbnNlEisKCmZsYXNoY2FyZHMYASADKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIlMKFlVwZGF0ZUZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkSDQoFZnJvbnQYAiABKAkSDAoEYmFjaxgDIAEoCRIQCghwb3NpdGlvbhgEIAEoBSJFChdVcGRhdGVGbGFzaGNhcmRSZXNwb25zZRIqCglmbGFzaGNhcmQYASABKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIiQKFkRlbGV0ZUZsYXNoY2FyZFJlcXVlc3QSCgoCaWQYASABKAkiGQoXRGVsZXRlRmxhc2hjYXJkUmVzcG9uc2UiUgoXSW1wb3J0Rmxhc2hjYXJkc1JlcXVlc3QSDwoHZGVja19pZBgBIAEoCRImCgVjYXJkcxgCIAMoCzIXLmZsYXNoY2FyZC52MS5DYXJkSW5wdXQiRwoYSW1wb3J0Rmxhc2hjYXJkc1Jlc3BvbnNlEisKCmZsYXNoY2FyZHMYASADKAsyFy5mbGFzaGNhcmQudjEuRmxhc2hjYXJkIkMKClJldmlld0NhcmQSJQoEY2FyZBgBIAEoCzIXLmZsYXNoY2FyZC52MS5GbGFzaGNhcmQSDgoGaXNfbmV3GAIgASgIIjgKEkdldER1ZUNhcmRzUmVxdWVzdBIPCgdkZWNrX2lkGAEgASgJEhEKCW5ld19saW1pdBgCIAEoBSI+ChNHZXREdWVDYXJkc1Jlc3BvbnNlEicKBWNhcmRzGAEgAygLMhguZmxhc2hjYXJkLnYxLlJldmlld0NhcmQiTAoTU3VibWl0UmV2aWV3UmVxdWVzdBIPCgdjYXJkX2lkGAEgASgJEiQKBnJhdGluZxgCIAEoDjIULmZsYXNoY2FyZC52MS5SYXRpbmciWgoUU3VibWl0UmV2aWV3UmVzcG9uc2USKgoGZHVlX2F0GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIWCg5zY2hlZHVsZWRfZGF5cxgCIAEoBSI0CgdEZWNrRHVlEg8KB2RlY2tfaWQYASABKAkSCwoDZHVlGAIgASgFEgsKA25ldxgDIAEoBSIZChdHZXRTdHVkeU92ZXJ2aWV3UmVxdWVzdCKTAQoYR2V0U3R1ZHlPdmVydmlld1Jlc3BvbnNlEhEKCWR1ZV90b3RhbBgBIAEoBRIRCgluZXdfdG90YWwYAiABKAUSFgoOcmV2aWV3ZWRfdG9kYXkYAyABKAUSEwoLc3RyZWFrX2RheXMYBCABKAUSJAoFZGVja3MYBSADKAsyFS5mbGFzaGNhcmQudjEuRGVja0R1ZSplCgZSYXRpbmcSFgoSUkFUSU5HX1VOU1BFQ0lGSUVEEAASEAoMUkFUSU5HX0FHQUlOEAESDwoLUkFUSU5HX0hBUkQQAhIPCgtSQVRJTkdfR09PRBADEg8KC1JBVElOR19FQVNZEAQytgMKDUZvbGRlclNlcnZpY2USVQoMQ3JlYXRlRm9sZGVyEiEuZmxhc2hjYXJkLnYxLkNyZWF0ZUZvbGRlclJlcXVlc3QaIi5mbGFzaGNhcmQudjEuQ3JlYXRlRm9sZGVyUmVzcG9uc2USTAoJR2V0Rm9sZGVyEh4uZmxhc2hjYXJkLnYxLkdldEZvbGRlclJlcXVlc3QaHy5mbGFzaGNhcmQudjEuR2V0Rm9sZGVyUmVzcG9uc2USUgoLTGlzdEZvbGRlcnMSIC5mbGFzaGNhcmQudjEuTGlzdEZvbGRlcnNSZXF1ZXN0GiEuZmxhc2hjYXJkLnYxLkxpc3RGb2xkZXJzUmVzcG9uc2USVQoMVXBkYXRlRm9sZGVyEiEuZmxhc2hjYXJkLnYxLlVwZGF0ZUZvbGRlclJlcXVlc3QaIi5mbGFzaGNhcmQudjEuVXBkYXRlRm9sZGVyUmVzcG9uc2USVQoMRGVsZXRlRm9sZGVyEiEuZmxhc2hjYXJkLnYxLkRlbGV0ZUZvbGRlclJlcXVlc3QaIi5mbGFzaGNhcmQudjEuRGVsZXRlRm9sZGVyUmVzcG9uc2Uy5wMKC0RlY2tTZXJ2aWNlEk8KCkNyZWF0ZURlY2sSHy5mbGFzaGNhcmQudjEuQ3JlYXRlRGVja1JlcXVlc3QaIC5mbGFzaGNhcmQudjEuQ3JlYXRlRGVja1Jlc3BvbnNlEkYKB0dldERlY2sSHC5mbGFzaGNhcmQudjEuR2V0RGVja1JlcXVlc3QaHS5mbGFzaGNhcmQudjEuR2V0RGVja1Jlc3BvbnNlEkwKCUxpc3REZWNrcxIeLmZsYXNoY2FyZC52MS5MaXN0RGVja3NSZXF1ZXN0Gh8uZmxhc2hjYXJkLnYxLkxpc3REZWNrc1Jlc3BvbnNlEk8KClVwZGF0ZURlY2sSHy5mbGFzaGNhcmQudjEuVXBkYXRlRGVja1JlcXVlc3QaIC5mbGFzaGNhcmQudjEuVXBkYXRlRGVja1Jlc3BvbnNlEk8KCkRlbGV0ZURlY2sSHy5mbGFzaGNhcmQudjEuRGVsZXRlRGVja1JlcXVlc3QaIC5mbGFzaGNhcmQudjEuRGVsZXRlRGVja1Jlc3BvbnNlEk8KCkltcG9ydERlY2sSHy5mbGFzaGNhcmQudjEuSW1wb3J0RGVja1JlcXVlc3QaIC5mbGFzaGNhcmQudjEuSW1wb3J0RGVja1Jlc3BvbnNlMskEChBGbGFzaGNhcmRTZXJ2aWNlEl4KD0NyZWF0ZUZsYXNoY2FyZBIkLmZsYXNoY2FyZC52MS5DcmVhdGVGbGFzaGNhcmRSZXF1ZXN0GiUuZmxhc2hjYXJkLnYxLkNyZWF0ZUZsYXNoY2FyZFJlc3BvbnNlElUKDEdldEZsYXNoY2FyZBIhLmZsYXNoY2FyZC52MS5HZXRGbGFzaGNhcmRSZXF1ZXN0GiIuZmxhc2hjYXJkLnYxLkdldEZsYXNoY2FyZFJlc3BvbnNlElsKDkxpc3RGbGFzaGNhcmRzEiMuZmxhc2hjYXJkLnYxLkxpc3RGbGFzaGNhcmRzUmVxdWVzdBokLmZsYXNoY2FyZC52MS5MaXN0Rmxhc2hjYXJkc1Jlc3BvbnNlEl4KD1VwZGF0ZUZsYXNoY2FyZBIkLmZsYXNoY2FyZC52MS5VcGRhdGVGbGFzaGNhcmRSZXF1ZXN0GiUuZmxhc2hjYXJkLnYxLlVwZGF0ZUZsYXNoY2FyZFJlc3BvbnNlEl4KD0RlbGV0ZUZsYXNoY2FyZBIkLmZsYXNoY2FyZC52MS5EZWxldGVGbGFzaGNhcmRSZXF1ZXN0GiUuZmxhc2hjYXJkLnYxLkRlbGV0ZUZsYXNoY2FyZFJlc3BvbnNlEmEKEEltcG9ydEZsYXNoY2FyZHMSJS5mbGFzaGNhcmQudjEuSW1wb3J0Rmxhc2hjYXJkc1JlcXVlc3QaJi5mbGFzaGNhcmQudjEuSW1wb3J0Rmxhc2hjYXJkc1Jlc3BvbnNlMpwCCgxTdHVkeVNlcnZpY2USUgoLR2V0RHVlQ2FyZHMSIC5mbGFzaGNhcmQudjEuR2V0RHVlQ2FyZHNSZXF1ZXN0GiEuZmxhc2hjYXJkLnYxLkdldER1ZUNhcmRzUmVzcG9uc2USVQoMU3VibWl0UmV2aWV3EiEuZmxhc2hjYXJkLnYxLlN1Ym1pdFJldmlld1JlcXVlc3QaIi5mbGFzaGNhcmQudjEuU3VibWl0UmV2aWV3UmVzcG9uc2USYQoQR2V0U3R1ZHlPdmVydmlldxIlLmZsYXNoY2FyZC52MS5HZXRTdHVkeU92ZXJ2aWV3UmVxdWVzdBomLmZsYXNoY2FyZC52MS5HZXRTdHVkeU92ZXJ2aWV3UmVzcG9uc2ViBnByb3RvMw", [file_google_protobuf_timestamp]);
 
 /**
  * @generated from message flashcard.v1.Folder
@@ -842,6 +842,224 @@ export const ImportFlashcardsResponseSchema: GenMessage<ImportFlashcardsResponse
   messageDesc(file_flashcard_v1_flashcard, 38);
 
 /**
+ * @generated from message flashcard.v1.ReviewCard
+ */
+export type ReviewCard = Message<"flashcard.v1.ReviewCard"> & {
+  /**
+   * @generated from field: flashcard.v1.Flashcard card = 1;
+   */
+  card?: Flashcard | undefined;
+
+  /**
+   * @generated from field: bool is_new = 2;
+   */
+  isNew: boolean;
+};
+
+/**
+ * Describes the message flashcard.v1.ReviewCard.
+ * Use `create(ReviewCardSchema)` to create a new message.
+ */
+export const ReviewCardSchema: GenMessage<ReviewCard> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 39);
+
+/**
+ * @generated from message flashcard.v1.GetDueCardsRequest
+ */
+export type GetDueCardsRequest = Message<"flashcard.v1.GetDueCardsRequest"> & {
+  /**
+   * @generated from field: string deck_id = 1;
+   */
+  deckId: string;
+
+  /**
+   * @generated from field: int32 new_limit = 2;
+   */
+  newLimit: number;
+};
+
+/**
+ * Describes the message flashcard.v1.GetDueCardsRequest.
+ * Use `create(GetDueCardsRequestSchema)` to create a new message.
+ */
+export const GetDueCardsRequestSchema: GenMessage<GetDueCardsRequest> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 40);
+
+/**
+ * @generated from message flashcard.v1.GetDueCardsResponse
+ */
+export type GetDueCardsResponse = Message<"flashcard.v1.GetDueCardsResponse"> & {
+  /**
+   * @generated from field: repeated flashcard.v1.ReviewCard cards = 1;
+   */
+  cards: ReviewCard[];
+};
+
+/**
+ * Describes the message flashcard.v1.GetDueCardsResponse.
+ * Use `create(GetDueCardsResponseSchema)` to create a new message.
+ */
+export const GetDueCardsResponseSchema: GenMessage<GetDueCardsResponse> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 41);
+
+/**
+ * @generated from message flashcard.v1.SubmitReviewRequest
+ */
+export type SubmitReviewRequest = Message<"flashcard.v1.SubmitReviewRequest"> & {
+  /**
+   * @generated from field: string card_id = 1;
+   */
+  cardId: string;
+
+  /**
+   * @generated from field: flashcard.v1.Rating rating = 2;
+   */
+  rating: Rating;
+};
+
+/**
+ * Describes the message flashcard.v1.SubmitReviewRequest.
+ * Use `create(SubmitReviewRequestSchema)` to create a new message.
+ */
+export const SubmitReviewRequestSchema: GenMessage<SubmitReviewRequest> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 42);
+
+/**
+ * @generated from message flashcard.v1.SubmitReviewResponse
+ */
+export type SubmitReviewResponse = Message<"flashcard.v1.SubmitReviewResponse"> & {
+  /**
+   * @generated from field: google.protobuf.Timestamp due_at = 1;
+   */
+  dueAt?: Timestamp | undefined;
+
+  /**
+   * @generated from field: int32 scheduled_days = 2;
+   */
+  scheduledDays: number;
+};
+
+/**
+ * Describes the message flashcard.v1.SubmitReviewResponse.
+ * Use `create(SubmitReviewResponseSchema)` to create a new message.
+ */
+export const SubmitReviewResponseSchema: GenMessage<SubmitReviewResponse> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 43);
+
+/**
+ * @generated from message flashcard.v1.DeckDue
+ */
+export type DeckDue = Message<"flashcard.v1.DeckDue"> & {
+  /**
+   * @generated from field: string deck_id = 1;
+   */
+  deckId: string;
+
+  /**
+   * @generated from field: int32 due = 2;
+   */
+  due: number;
+
+  /**
+   * @generated from field: int32 new = 3;
+   */
+  new: number;
+};
+
+/**
+ * Describes the message flashcard.v1.DeckDue.
+ * Use `create(DeckDueSchema)` to create a new message.
+ */
+export const DeckDueSchema: GenMessage<DeckDue> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 44);
+
+/**
+ * @generated from message flashcard.v1.GetStudyOverviewRequest
+ */
+export type GetStudyOverviewRequest = Message<"flashcard.v1.GetStudyOverviewRequest"> & {
+};
+
+/**
+ * Describes the message flashcard.v1.GetStudyOverviewRequest.
+ * Use `create(GetStudyOverviewRequestSchema)` to create a new message.
+ */
+export const GetStudyOverviewRequestSchema: GenMessage<GetStudyOverviewRequest> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 45);
+
+/**
+ * @generated from message flashcard.v1.GetStudyOverviewResponse
+ */
+export type GetStudyOverviewResponse = Message<"flashcard.v1.GetStudyOverviewResponse"> & {
+  /**
+   * @generated from field: int32 due_total = 1;
+   */
+  dueTotal: number;
+
+  /**
+   * @generated from field: int32 new_total = 2;
+   */
+  newTotal: number;
+
+  /**
+   * @generated from field: int32 reviewed_today = 3;
+   */
+  reviewedToday: number;
+
+  /**
+   * @generated from field: int32 streak_days = 4;
+   */
+  streakDays: number;
+
+  /**
+   * @generated from field: repeated flashcard.v1.DeckDue decks = 5;
+   */
+  decks: DeckDue[];
+};
+
+/**
+ * Describes the message flashcard.v1.GetStudyOverviewResponse.
+ * Use `create(GetStudyOverviewResponseSchema)` to create a new message.
+ */
+export const GetStudyOverviewResponseSchema: GenMessage<GetStudyOverviewResponse> = /*@__PURE__*/
+  messageDesc(file_flashcard_v1_flashcard, 46);
+
+/**
+ * @generated from enum flashcard.v1.Rating
+ */
+export enum Rating {
+  /**
+   * @generated from enum value: RATING_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: RATING_AGAIN = 1;
+   */
+  AGAIN = 1,
+
+  /**
+   * @generated from enum value: RATING_HARD = 2;
+   */
+  HARD = 2,
+
+  /**
+   * @generated from enum value: RATING_GOOD = 3;
+   */
+  GOOD = 3,
+
+  /**
+   * @generated from enum value: RATING_EASY = 4;
+   */
+  EASY = 4,
+}
+
+/**
+ * Describes the enum flashcard.v1.Rating.
+ */
+export const RatingSchema: GenEnum<Rating> = /*@__PURE__*/
+  enumDesc(file_flashcard_v1_flashcard, 0);
+
+/**
  * @generated from service flashcard.v1.FolderService
  */
 export const FolderService: GenService<{
@@ -997,4 +1215,35 @@ export const FlashcardService: GenService<{
   },
 }> = /*@__PURE__*/
   serviceDesc(file_flashcard_v1_flashcard, 2);
+
+/**
+ * @generated from service flashcard.v1.StudyService
+ */
+export const StudyService: GenService<{
+  /**
+   * @generated from rpc flashcard.v1.StudyService.GetDueCards
+   */
+  getDueCards: {
+    methodKind: "unary";
+    input: typeof GetDueCardsRequestSchema;
+    output: typeof GetDueCardsResponseSchema;
+  },
+  /**
+   * @generated from rpc flashcard.v1.StudyService.SubmitReview
+   */
+  submitReview: {
+    methodKind: "unary";
+    input: typeof SubmitReviewRequestSchema;
+    output: typeof SubmitReviewResponseSchema;
+  },
+  /**
+   * @generated from rpc flashcard.v1.StudyService.GetStudyOverview
+   */
+  getStudyOverview: {
+    methodKind: "unary";
+    input: typeof GetStudyOverviewRequestSchema;
+    output: typeof GetStudyOverviewResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_flashcard_v1_flashcard, 3);
 

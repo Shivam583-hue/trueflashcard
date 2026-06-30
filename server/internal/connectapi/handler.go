@@ -22,6 +22,7 @@ func NewHandler(q dbgen.Querier, tx service.Transactor, sessions *auth.SessionMa
 	mux.Handle(flashcardv1connect.NewFolderServiceHandler(folderAPI{service.NewFolderService(q)}, opts))
 	mux.Handle(flashcardv1connect.NewDeckServiceHandler(deckAPI{service.NewDeckService(q, tx)}, opts))
 	mux.Handle(flashcardv1connect.NewFlashcardServiceHandler(flashcardAPI{service.NewFlashcardService(q, tx)}, opts))
+	mux.Handle(flashcardv1connect.NewStudyServiceHandler(studyAPI{service.NewStudyService(q, tx)}, opts))
 
 	return withCORS(mux, appURL)
 }

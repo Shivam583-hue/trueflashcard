@@ -855,3 +855,181 @@ var FlashcardService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "flashcard/v1/flashcard.proto",
 }
+
+const (
+	StudyService_GetDueCards_FullMethodName      = "/flashcard.v1.StudyService/GetDueCards"
+	StudyService_SubmitReview_FullMethodName     = "/flashcard.v1.StudyService/SubmitReview"
+	StudyService_GetStudyOverview_FullMethodName = "/flashcard.v1.StudyService/GetStudyOverview"
+)
+
+// StudyServiceClient is the client API for StudyService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type StudyServiceClient interface {
+	GetDueCards(ctx context.Context, in *GetDueCardsRequest, opts ...grpc.CallOption) (*GetDueCardsResponse, error)
+	SubmitReview(ctx context.Context, in *SubmitReviewRequest, opts ...grpc.CallOption) (*SubmitReviewResponse, error)
+	GetStudyOverview(ctx context.Context, in *GetStudyOverviewRequest, opts ...grpc.CallOption) (*GetStudyOverviewResponse, error)
+}
+
+type studyServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewStudyServiceClient(cc grpc.ClientConnInterface) StudyServiceClient {
+	return &studyServiceClient{cc}
+}
+
+func (c *studyServiceClient) GetDueCards(ctx context.Context, in *GetDueCardsRequest, opts ...grpc.CallOption) (*GetDueCardsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDueCardsResponse)
+	err := c.cc.Invoke(ctx, StudyService_GetDueCards_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *studyServiceClient) SubmitReview(ctx context.Context, in *SubmitReviewRequest, opts ...grpc.CallOption) (*SubmitReviewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SubmitReviewResponse)
+	err := c.cc.Invoke(ctx, StudyService_SubmitReview_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *studyServiceClient) GetStudyOverview(ctx context.Context, in *GetStudyOverviewRequest, opts ...grpc.CallOption) (*GetStudyOverviewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetStudyOverviewResponse)
+	err := c.cc.Invoke(ctx, StudyService_GetStudyOverview_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// StudyServiceServer is the server API for StudyService service.
+// All implementations must embed UnimplementedStudyServiceServer
+// for forward compatibility.
+type StudyServiceServer interface {
+	GetDueCards(context.Context, *GetDueCardsRequest) (*GetDueCardsResponse, error)
+	SubmitReview(context.Context, *SubmitReviewRequest) (*SubmitReviewResponse, error)
+	GetStudyOverview(context.Context, *GetStudyOverviewRequest) (*GetStudyOverviewResponse, error)
+	mustEmbedUnimplementedStudyServiceServer()
+}
+
+// UnimplementedStudyServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedStudyServiceServer struct{}
+
+func (UnimplementedStudyServiceServer) GetDueCards(context.Context, *GetDueCardsRequest) (*GetDueCardsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDueCards not implemented")
+}
+func (UnimplementedStudyServiceServer) SubmitReview(context.Context, *SubmitReviewRequest) (*SubmitReviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitReview not implemented")
+}
+func (UnimplementedStudyServiceServer) GetStudyOverview(context.Context, *GetStudyOverviewRequest) (*GetStudyOverviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStudyOverview not implemented")
+}
+func (UnimplementedStudyServiceServer) mustEmbedUnimplementedStudyServiceServer() {}
+func (UnimplementedStudyServiceServer) testEmbeddedByValue()                      {}
+
+// UnsafeStudyServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StudyServiceServer will
+// result in compilation errors.
+type UnsafeStudyServiceServer interface {
+	mustEmbedUnimplementedStudyServiceServer()
+}
+
+func RegisterStudyServiceServer(s grpc.ServiceRegistrar, srv StudyServiceServer) {
+	// If the following call pancis, it indicates UnimplementedStudyServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&StudyService_ServiceDesc, srv)
+}
+
+func _StudyService_GetDueCards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDueCardsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudyServiceServer).GetDueCards(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudyService_GetDueCards_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudyServiceServer).GetDueCards(ctx, req.(*GetDueCardsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StudyService_SubmitReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitReviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudyServiceServer).SubmitReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudyService_SubmitReview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudyServiceServer).SubmitReview(ctx, req.(*SubmitReviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StudyService_GetStudyOverview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStudyOverviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudyServiceServer).GetStudyOverview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudyService_GetStudyOverview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudyServiceServer).GetStudyOverview(ctx, req.(*GetStudyOverviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// StudyService_ServiceDesc is the grpc.ServiceDesc for StudyService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var StudyService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "flashcard.v1.StudyService",
+	HandlerType: (*StudyServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetDueCards",
+			Handler:    _StudyService_GetDueCards_Handler,
+		},
+		{
+			MethodName: "SubmitReview",
+			Handler:    _StudyService_SubmitReview_Handler,
+		},
+		{
+			MethodName: "GetStudyOverview",
+			Handler:    _StudyService_GetStudyOverview_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "flashcard/v1/flashcard.proto",
+}

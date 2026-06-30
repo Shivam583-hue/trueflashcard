@@ -213,3 +213,57 @@ service FlashcardService {
   rpc DeleteFlashcard(DeleteFlashcardRequest) returns (DeleteFlashcardResponse);
   rpc ImportFlashcards(ImportFlashcardsRequest) returns (ImportFlashcardsResponse);
 }
+
+enum Rating {
+  RATING_UNSPECIFIED = 0;
+  RATING_AGAIN = 1;
+  RATING_HARD = 2;
+  RATING_GOOD = 3;
+  RATING_EASY = 4;
+}
+
+message ReviewCard {
+  Flashcard card = 1;
+  bool is_new = 2;
+}
+
+message GetDueCardsRequest {
+  string deck_id = 1;
+  int32 new_limit = 2;
+}
+
+message GetDueCardsResponse {
+  repeated ReviewCard cards = 1;
+}
+
+message SubmitReviewRequest {
+  string card_id = 1;
+  Rating rating = 2;
+}
+
+message SubmitReviewResponse {
+  google.protobuf.Timestamp due_at = 1;
+  int32 scheduled_days = 2;
+}
+
+message DeckDue {
+  string deck_id = 1;
+  int32 due = 2;
+  int32 new = 3;
+}
+
+message GetStudyOverviewRequest {}
+
+message GetStudyOverviewResponse {
+  int32 due_total = 1;
+  int32 new_total = 2;
+  int32 reviewed_today = 3;
+  int32 streak_days = 4;
+  repeated DeckDue decks = 5;
+}
+
+service StudyService {
+  rpc GetDueCards(GetDueCardsRequest) returns (GetDueCardsResponse);
+  rpc SubmitReview(SubmitReviewRequest) returns (SubmitReviewResponse);
+  rpc GetStudyOverview(GetStudyOverviewRequest) returns (GetStudyOverviewResponse);
+}

@@ -82,3 +82,17 @@ func (a flashcardAPI) DeleteFlashcard(ctx context.Context, r *connect.Request[v1
 func (a flashcardAPI) ImportFlashcards(ctx context.Context, r *connect.Request[v1.ImportFlashcardsRequest]) (*connect.Response[v1.ImportFlashcardsResponse], error) {
 	return invoke(ctx, r, a.svc.ImportFlashcards)
 }
+
+type studyAPI struct{ svc *service.StudyService }
+
+func (a studyAPI) GetDueCards(ctx context.Context, r *connect.Request[v1.GetDueCardsRequest]) (*connect.Response[v1.GetDueCardsResponse], error) {
+	return invoke(ctx, r, a.svc.GetDueCards)
+}
+
+func (a studyAPI) SubmitReview(ctx context.Context, r *connect.Request[v1.SubmitReviewRequest]) (*connect.Response[v1.SubmitReviewResponse], error) {
+	return invoke(ctx, r, a.svc.SubmitReview)
+}
+
+func (a studyAPI) GetStudyOverview(ctx context.Context, r *connect.Request[v1.GetStudyOverviewRequest]) (*connect.Response[v1.GetStudyOverviewResponse], error) {
+	return invoke(ctx, r, a.svc.GetStudyOverview)
+}
