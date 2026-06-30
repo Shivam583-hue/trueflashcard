@@ -52,7 +52,7 @@ export function DecksView({ folderId }: { folderId: string }) {
     folderClient
       .getFolder({ id: folderId })
       .then((res) => active && setFolderName(res.folder?.name ?? null))
-      .catch(() => {});
+      .catch(() => { });
     return () => {
       active = false;
     };
@@ -263,7 +263,7 @@ function DeckCard({
           </span>
           {counts && counts.due + counts.new > 0 && (
             <span className="relative z-10 inline-flex items-center gap-1 rounded-full border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-[11px] font-medium tabular-nums text-neutral-400">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+              <span className="h-1.5 w-1.5 rounded-full" />
               {counts.due + counts.new} to study
             </span>
           )}
