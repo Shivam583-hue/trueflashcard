@@ -12,6 +12,7 @@ import {
 
 import { deckClient, folderClient } from "@/lib/client";
 import { useCollection } from "@/lib/use-collection";
+import { useStudyOverview, type DeckCounts } from "@/lib/use-study-overview";
 import { easeEmphasized } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/app/breadcrumbs";
@@ -29,6 +30,7 @@ type Deck = { id: string; name: string; description: string; cardCount: number }
 export function DecksView({ folderId }: { folderId: string }) {
   const reduce = useReducedMotion();
   const [folderName, setFolderName] = useState<string | null>(null);
+  const { overview } = useStudyOverview();
 
   const { status, items, setItems, needsAuth, reload } = useCollection<Deck>(
     useCallback(
@@ -171,6 +173,7 @@ export function DecksView({ folderId }: { folderId: string }) {
                   <DeckCard
                     folderId={folderId}
                     deck={deck}
+                    counts={overview?.byDeck.get(deck.id)}
                     onRenamed={rename}
                     onDeleted={remove}
                   />
@@ -187,11 +190,13 @@ export function DecksView({ folderId }: { folderId: string }) {
 function DeckCard({
   folderId,
   deck,
+  counts,
   onRenamed,
   onDeleted,
 }: {
   folderId: string;
   deck: Deck;
+  counts?: DeckCounts;
   onRenamed: (id: string, name: string) => void;
   onDeleted: (id: string) => void;
 }) {
@@ -252,9 +257,17 @@ function DeckCard({
         <h3 className="truncate text-sm font-medium text-neutral-100">
           {deck.name}
         </h3>
-        <p className="mt-0.5 text-xs text-neutral-500">
-          {deck.cardCount} {deck.cardCount === 1 ? "card" : "cards"}
-        </p>
+        <div className="mt-0.5 flex items-center gap-2 text-xs text-neutral-500">
+          <span>
+            {deck.cardCount} {deck.cardCount === 1 ? "card" : "cards"}
+          </span>
+          {counts && counts.due + counts.new > 0 && (
+            <span className="relative z-10 inline-flex items-center gap-1 rounded-full border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-[11px] font-medium tabular-nums text-neutral-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+              {counts.due + counts.new} to study
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

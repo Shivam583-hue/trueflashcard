@@ -14,6 +14,7 @@ import { deckClient, flashcardClient } from "@/lib/client";
 import { useCollection } from "@/lib/use-collection";
 import { easeEmphasized } from "@/lib/motion";
 import { Button, ButtonLink } from "@/components/ui/button";
+import { FlipCard, Centered } from "@/components/app/flip-card";
 import { EmptyState, ErrorState } from "@/components/app/states";
 
 type Card = { id: string; front: string; back: string };
@@ -192,7 +193,8 @@ function Session({
             className="w-full"
           >
             <FlipCard
-              card={cards[index]}
+              front={cards[index].front}
+              back={cards[index].back}
               flipped={flipped}
               onFlip={() => dispatch({ type: "flip" })}
             />
@@ -232,63 +234,6 @@ function Session({
   );
 }
 
-function FlipCard({
-  card,
-  flipped,
-  onFlip,
-}: {
-  card: Card;
-  flipped: boolean;
-  onFlip: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onFlip}
-      aria-label={flipped ? "Show question" : "Show answer"}
-      className="w-full [perspective:1600px] focus:outline-none"
-    >
-      <div
-        className="relative h-72 w-full [transform-style:preserve-3d] transition-transform duration-[450ms] [transition-timing-function:var(--ease-in-out)] motion-reduce:transition-none"
-        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
-      >
-        <Face className="bg-gradient-to-br from-neutral-900 to-neutral-950">
-          <Tag>Question</Tag>
-          <p className="mt-4 text-xl leading-snug text-neutral-50">{card.front}</p>
-        </Face>
-        <Face className="bg-gradient-to-br from-neutral-800 to-neutral-900 [transform:rotateY(180deg)]">
-          <Tag>Answer</Tag>
-          <p className="mt-4 text-xl leading-snug text-neutral-50">{card.back}</p>
-        </Face>
-      </div>
-    </button>
-  );
-}
-
-function Face({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div
-      className={`absolute inset-0 flex flex-col items-center justify-center rounded-2xl border border-neutral-800 p-8 text-center [backface-visibility:hidden] ${className ?? ""}`}
-    >
-      {children}
-    </div>
-  );
-}
-
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-neutral-500">
-      {children}
-    </span>
-  );
-}
-
 function Completion({
   total,
   onRestart,
@@ -322,13 +267,5 @@ function Completion({
         </ButtonLink>
       </div>
     </motion.div>
-  );
-}
-
-function Centered({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-xl items-center justify-center">
-      {children}
-    </div>
   );
 }

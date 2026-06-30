@@ -5,6 +5,7 @@ import {
   DeckService,
   FlashcardService,
   FolderService,
+  StudyService,
 } from "@/gen/flashcard/v1/flashcard_pb";
 
 const transport = createConnectTransport({
@@ -15,3 +16,4 @@ const transport = createConnectTransport({
 export const folderClient = createClient(FolderService, transport);
 export const deckClient = createClient(DeckService, transport);
 export const flashcardClient = createClient(FlashcardService, transport);
+export const studyClient = createClient(StudyService, transport);

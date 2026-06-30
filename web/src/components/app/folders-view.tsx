@@ -15,6 +15,7 @@ import { easeEmphasized } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { ConfirmDelete } from "@/components/app/confirm-delete";
 import { InlineNameForm } from "@/components/app/inline-name-form";
+import { StudyBanner } from "@/components/app/study-banner";
 import {
   CardSkeletons,
   EmptyState,
@@ -59,6 +60,10 @@ export function FoldersView() {
 
   return (
     <div className="mx-auto max-w-5xl">
+      <div className="mb-8">
+        <StudyBanner />
+      </div>
+
       <div className="flex min-h-9 items-center justify-between gap-4">
         <h1 className="text-base font-medium text-neutral-100">Your folders</h1>
         {creating ? (

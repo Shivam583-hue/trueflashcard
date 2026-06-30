@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   CardsThreeIcon,
+  LightningIcon,
   PencilSimpleIcon,
   PlayIcon,
   PlusIcon,
@@ -12,6 +13,7 @@ import {
 
 import { deckClient, flashcardClient, folderClient } from "@/lib/client";
 import { useCollection } from "@/lib/use-collection";
+import { useStudyOverview } from "@/lib/use-study-overview";
 import { easeEmphasized } from "@/lib/motion";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/app/breadcrumbs";
@@ -32,6 +34,8 @@ export function DeckView({
   const reduce = useReducedMotion();
   const [folderName, setFolderName] = useState<string | null>(null);
   const [deckName, setDeckName] = useState<string | null>(null);
+  const { overview } = useStudyOverview();
+  const counts = overview?.byDeck.get(deckId);
 
   const { status, items, setItems, needsAuth, reload } = useCollection<Card>(
     useCallback(
@@ -111,25 +115,19 @@ export function DeckView({
         ]}
       />
 
-      <div className="mt-4 flex min-h-9 items-center justify-between gap-4">
-        <h1 className="text-base font-medium text-neutral-100">
+      <div className="mt-4 flex min-h-9 flex-wrap items-center justify-between gap-3">
+        <h1 className="flex items-center gap-2.5 text-base font-medium text-neutral-100">
           Cards
           {status === "ready" && (
-            <span className="ml-2 text-sm font-normal text-neutral-500">
-              {count}
+            <span className="text-sm font-normal text-neutral-500">{count}</span>
+          )}
+          {counts && counts.due + counts.new > 0 && (
+            <span className="rounded-full border border-neutral-800 bg-neutral-900/60 px-2.5 py-0.5 text-[11px] font-medium tabular-nums text-neutral-400">
+              {counts.due} due · {counts.new} new
             </span>
           )}
         </h1>
-        <div className="flex items-center gap-2">
-          {count > 0 ? (
-            <ButtonLink
-              href={`/home/${folderId}/${deckId}/review`}
-              variant="ghost"
-            >
-              <PlayIcon size={16} weight="fill" />
-              Review
-            </ButtonLink>
-          ) : null}
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="ghost"
             onClick={() => setImporting(true)}
@@ -138,10 +136,29 @@ export function DeckView({
             <UploadSimpleIcon size={16} />
             Import
           </Button>
-          <Button onClick={() => setCreating(true)} disabled={status === "error"}>
+          <Button
+            variant="ghost"
+            onClick={() => setCreating(true)}
+            disabled={status === "error"}
+          >
             <PlusIcon size={16} />
             Add card
           </Button>
+          {count > 0 && (
+            <ButtonLink
+              href={`/home/${folderId}/${deckId}/review`}
+              variant="ghost"
+            >
+              <LightningIcon size={16} />
+              Cram
+            </ButtonLink>
+          )}
+          {count > 0 && (
+            <ButtonLink href={`/home/${folderId}/${deckId}/study`}>
+              <PlayIcon size={16} weight="fill" />
+              Study
+            </ButtonLink>
+          )}
         </div>
       </div>
 
